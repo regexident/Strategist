@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF03DFE51D0C7C5400FFBAF4 /* TicTacToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */; };
+		BF03DFE61D0C7C5400FFBAF4 /* TicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */; };
+		_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "_____Product_Strategist" /* Strategist.framework */; };
+		__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Strategist.swift /* Strategist.swift */; };
+		__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BF9C12241D04ECE400449EA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = __RootObject_ /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "______Target_Strategist";
+			remoteInfo = Strategist;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe.swift; sourceTree = "<group>"; };
+		BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeTests.swift; sourceTree = "<group>"; };
+		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategist.swift; sourceTree = "<group>"; };
+		__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = Strategist.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
+		__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = StrategistTestSuite_Info.plist; path = Strategist.xcodeproj/StrategistTestSuite_Info.plist; sourceTree = SOURCE_ROOT; };
+		__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Strategist_Info.plist; path = Strategist.xcodeproj/Strategist_Info.plist; sourceTree = SOURCE_ROOT; };
+		__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategistTests.swift; sourceTree = "<group>"; };
+		"_____Product_Strategist" /* Strategist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Strategist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = StrategistTestSuite.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		"___LinkPhase_Strategist" /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		"___LinkPhase_StrategistTestSuite" /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BF03DFE21D0C7C4D00FFBAF4 /* TicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */,
+				BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */,
+			);
+			name = TicTacToe;
+			path = "../../../Strategist 2/Tests/Strategist/TicTacToe";
+			sourceTree = "<group>";
+		};
+		TestProducts_ /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		"___RootGroup_" = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Package.swift /* Package.swift */,
+				"_____Configs_" /* Configs */,
+				"_____Sources_" /* Sources */,
+				"_______Tests_" /* Tests */,
+				"____Products_" /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		"____Products_" /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				TestProducts_ /* Tests */,
+				"_____Product_Strategist" /* Strategist.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		"_____Configs_" /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */,
+			);
+			name = Configs;
+			sourceTree = "<group>";
+		};
+		"_____Sources_" /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				"_______Group_Strategist" /* Strategist */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		"_______Group_Strategist" /* Strategist */ = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */,
+				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
+			);
+			name = Strategist;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		"_______Group_StrategistTestSuite" /* StrategistTestSuite */ = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */,
+				BF03DFE21D0C7C4D00FFBAF4 /* TicTacToe */,
+				__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */,
+			);
+			name = StrategistTestSuite;
+			path = Tests/Strategist;
+			sourceTree = "<group>";
+		};
+		"_______Tests_" /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				"_______Group_StrategistTestSuite" /* StrategistTestSuite */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"______Target_Strategist" /* Strategist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = "_______Confs_Strategist" /* Build configuration list for PBXNativeTarget "Strategist" */;
+			buildPhases = (
+				CompilePhase_Strategist /* Sources */,
+				"___LinkPhase_Strategist" /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Strategist;
+			productName = Strategist;
+			productReference = "_____Product_Strategist" /* Strategist.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"______Target_StrategistTestSuite" /* StrategistTestSuite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = "_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */;
+			buildPhases = (
+				CompilePhase_StrategistTestSuite /* Sources */,
+				"___LinkPhase_StrategistTestSuite" /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				__Dependency_Strategist /* PBXTargetDependency */,
+			);
+			name = StrategistTestSuite;
+			productName = StrategistTestSuite;
+			productReference = "_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		__RootObject_ /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = "___RootConfs_" /* Build configuration list for PBXProject "Strategist" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = "___RootGroup_";
+			productRefGroup = "____Products_" /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"______Target_Strategist" /* Strategist */,
+				"______Target_StrategistTestSuite" /* StrategistTestSuite */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CompilePhase_Strategist /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CompilePhase_StrategistTestSuite /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				BF03DFE51D0C7C5400FFBAF4 /* TicTacToe.swift in Sources */,
+				BF03DFE61D0C7C5400FFBAF4 /* TicTacToeTests.swift in Sources */,
+				__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		__Dependency_Strategist /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "______Target_Strategist" /* Strategist */;
+			targetProxy = BF9C12241D04ECE400449EA6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		_ReleaseConf_Strategist /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = Strategist.xcodeproj/Strategist_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+			};
+			name = Release;
+		};
+		_ReleaseConf_StrategistTestSuite /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = Strategist.xcodeproj/StrategistTestSuite_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		"___DebugConf_Strategist" /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = Strategist.xcodeproj/Strategist_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		"___DebugConf_StrategistTestSuite" /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = Strategist.xcodeproj/StrategistTestSuite_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		"_____Release_" /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = __PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		"_______Debug_" /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = __PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		"___RootConfs_" /* Build configuration list for PBXProject "Strategist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"_______Debug_" /* Debug */,
+				"_____Release_" /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		"_______Confs_Strategist" /* Build configuration list for PBXNativeTarget "Strategist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"___DebugConf_Strategist" /* Debug */,
+				_ReleaseConf_Strategist /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		"_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"___DebugConf_StrategistTestSuite" /* Debug */,
+				_ReleaseConf_StrategistTestSuite /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = __RootObject_ /* Project object */;
+}
