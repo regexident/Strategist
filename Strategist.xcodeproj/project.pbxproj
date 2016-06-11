@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF03DFE51D0C7C5400FFBAF4 /* TicTacToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */; };
-		BF03DFE61D0C7C5400FFBAF4 /* TicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */; };
+		BF03DFEB1D0C7F8F00FFBAF4 /* Evaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE71D0C7F8F00FFBAF4 /* Evaluation.swift */; };
+		BF03DFEC1D0C7F8F00FFBAF4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE81D0C7F8F00FFBAF4 /* Extensions.swift */; };
+		BF03DFED1D0C7F8F00FFBAF4 /* RandomSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFE91D0C7F8F00FFBAF4 /* RandomSource.swift */; };
+		BF03DFEE1D0C7F8F00FFBAF4 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */; };
+		BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */; };
+		BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */; };
 		_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "_____Product_Strategist" /* Strategist.framework */; };
 		__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Strategist.swift /* Strategist.swift */; };
 		__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */; };
@@ -25,8 +29,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe.swift; sourceTree = "<group>"; };
-		BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeTests.swift; sourceTree = "<group>"; };
+		BF03DFE71D0C7F8F00FFBAF4 /* Evaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evaluation.swift; sourceTree = "<group>"; };
+		BF03DFE81D0C7F8F00FFBAF4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BF03DFE91D0C7F8F00FFBAF4 /* RandomSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSource.swift; sourceTree = "<group>"; };
+		BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
+		BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchPolicy.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategist.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = Strategist.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
@@ -56,16 +64,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BF03DFE21D0C7C4D00FFBAF4 /* TicTacToe */ = {
-			isa = PBXGroup;
-			children = (
-				BF03DFE31D0C7C4D00FFBAF4 /* TicTacToe.swift */,
-				BF03DFE41D0C7C4D00FFBAF4 /* TicTacToeTests.swift */,
-			);
-			name = TicTacToe;
-			path = "../../../Strategist 2/Tests/Strategist/TicTacToe";
-			sourceTree = "<group>";
-		};
 		TestProducts_ /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */,
+				BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */,
+				BF03DFE71D0C7F8F00FFBAF4 /* Evaluation.swift */,
+				BF03DFE81D0C7F8F00FFBAF4 /* Extensions.swift */,
+				BF03DFE91D0C7F8F00FFBAF4 /* RandomSource.swift */,
+				BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */,
+				BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */,
 				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
 			);
 			name = Strategist;
@@ -124,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */,
-				BF03DFE21D0C7C4D00FFBAF4 /* TicTacToe */,
 				__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */,
 			);
 			name = StrategistTestSuite;
@@ -206,7 +209,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */,
 				__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */,
+				BF03DFEC1D0C7F8F00FFBAF4 /* Extensions.swift in Sources */,
+				BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */,
+				BF03DFEB1D0C7F8F00FFBAF4 /* Evaluation.swift in Sources */,
+				BF03DFED1D0C7F8F00FFBAF4 /* RandomSource.swift in Sources */,
+				BF03DFEE1D0C7F8F00FFBAF4 /* Score.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,8 +223,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				BF03DFE51D0C7C5400FFBAF4 /* TicTacToe.swift in Sources */,
-				BF03DFE61D0C7C5400FFBAF4 /* TicTacToeTests.swift in Sources */,
 				__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
