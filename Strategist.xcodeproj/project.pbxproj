@@ -13,6 +13,7 @@
 		BF03DFEE1D0C7F8F00FFBAF4 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */; };
 		BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */; };
 		BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */; };
+		BF03DFF41D0C858700FFBAF4 /* RandomStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */; };
 		_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "_____Product_Strategist" /* Strategist.framework */; };
 		__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Strategist.swift /* Strategist.swift */; };
 		__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */; };
@@ -35,6 +36,7 @@
 		BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
 		BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchPolicy.swift; sourceTree = "<group>"; };
+		BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomStrategy.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategist.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = Strategist.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				BF03DFE91D0C7F8F00FFBAF4 /* RandomSource.swift */,
 				BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */,
 				BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */,
+				BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */,
 				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
 			);
 			name = Strategist;
@@ -212,6 +215,7 @@
 				BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */,
 				__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */,
 				BF03DFEC1D0C7F8F00FFBAF4 /* Extensions.swift in Sources */,
+				BF03DFF41D0C858700FFBAF4 /* RandomStrategy.swift in Sources */,
 				BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */,
 				BF03DFEB1D0C7F8F00FFBAF4 /* Evaluation.swift in Sources */,
 				BF03DFED1D0C7F8F00FFBAF4 /* RandomSource.swift in Sources */,
