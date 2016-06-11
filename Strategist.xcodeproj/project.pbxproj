@@ -14,6 +14,9 @@
 		BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */; };
 		BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */; };
 		BF03DFF41D0C858700FFBAF4 /* RandomStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */; };
+		BF03DFFA1D0C85D500FFBAF4 /* TicTacToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF61D0C85C500FFBAF4 /* TicTacToe.swift */; };
+		BF03DFFB1D0C85D500FFBAF4 /* TicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03DFF71D0C85C500FFBAF4 /* TicTacToeTests.swift */; };
+		BF03E0031D0CA5FA00FFBAF4 /* MiniMaxTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03E0011D0CA5F800FFBAF4 /* MiniMaxTreeSearch.swift */; };
 		_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "_____Product_Strategist" /* Strategist.framework */; };
 		__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Strategist.swift /* Strategist.swift */; };
 		__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */; };
@@ -37,6 +40,9 @@
 		BF03DFEF1D0C7FAD00FFBAF4 /* Strategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
 		BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchPolicy.swift; sourceTree = "<group>"; };
 		BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomStrategy.swift; sourceTree = "<group>"; };
+		BF03DFF61D0C85C500FFBAF4 /* TicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe.swift; sourceTree = "<group>"; };
+		BF03DFF71D0C85C500FFBAF4 /* TicTacToeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeTests.swift; sourceTree = "<group>"; };
+		BF03E0011D0CA5F800FFBAF4 /* MiniMaxTreeSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMaxTreeSearch.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategist.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = Strategist.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
@@ -66,6 +72,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF03DFF51D0C85C500FFBAF4 /* TicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				BF03DFF61D0C85C500FFBAF4 /* TicTacToe.swift */,
+				BF03DFF71D0C85C500FFBAF4 /* TicTacToeTests.swift */,
+			);
+			path = TicTacToe;
+			sourceTree = "<group>";
+		};
 		TestProducts_ /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +136,7 @@
 				BF03DFEA1D0C7F8F00FFBAF4 /* Score.swift */,
 				BF03DFF11D0C7FD900FFBAF4 /* TreeSearchPolicy.swift */,
 				BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */,
+				BF03E0011D0CA5F800FFBAF4 /* MiniMaxTreeSearch.swift */,
 				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
 			);
 			name = Strategist;
@@ -130,6 +146,7 @@
 		"_______Group_StrategistTestSuite" /* StrategistTestSuite */ = {
 			isa = PBXGroup;
 			children = (
+				BF03DFF51D0C85C500FFBAF4 /* TicTacToe */,
 				__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */,
 				__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */,
 			);
@@ -214,6 +231,7 @@
 			files = (
 				BF03DFF21D0C7FD900FFBAF4 /* TreeSearchPolicy.swift in Sources */,
 				__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */,
+				BF03E0031D0CA5FA00FFBAF4 /* MiniMaxTreeSearch.swift in Sources */,
 				BF03DFEC1D0C7F8F00FFBAF4 /* Extensions.swift in Sources */,
 				BF03DFF41D0C858700FFBAF4 /* RandomStrategy.swift in Sources */,
 				BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */,
@@ -227,6 +245,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BF03DFFA1D0C85D500FFBAF4 /* TicTacToe.swift in Sources */,
+				BF03DFFB1D0C85D500FFBAF4 /* TicTacToeTests.swift in Sources */,
 				__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
