@@ -11,15 +11,15 @@ import XCTest
 
 class TicTacToeTests: XCTestCase {
     typealias Game = TicTacToeGame
-    typealias TreeSearchPolicy = SimpleTreeSearchPolicy<Game>
     typealias Player = TicTacToePlayer
 
     func testMiniMaxTreeSearch() {
-        typealias Strategy = MiniMaxTreeSearch<Game, TreeSearchPolicy>
+        typealias Policy = SimpleTreeSearchPolicy<Game>
+        typealias Strategy = MiniMaxTreeSearch<Game, Policy>
 
         let players: [Player] = [.X, .O]
         var game = Game(players: players)
-        let policy = TreeSearchPolicy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
@@ -38,11 +38,12 @@ class TicTacToeTests: XCTestCase {
     }
 
     func testNegaMaxTreeSearch() {
-        typealias Strategy = NegaMaxTreeSearch<Game, TreeSearchPolicy>
+        typealias Policy = SimpleTreeSearchPolicy<Game>
+        typealias Strategy = NegaMaxTreeSearch<Game, Policy>
 
         let players: [Player] = [.X, .O]
         var game = Game(players: players)
-        let policy = TreeSearchPolicy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()

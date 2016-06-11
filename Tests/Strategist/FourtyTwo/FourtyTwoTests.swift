@@ -11,14 +11,14 @@ import XCTest
 
 class FourtyTwoTests: XCTestCase {
     typealias Game = FourtyTwoGame
-    typealias TreeSearchPolicy = SimpleTreeSearchPolicy<Game>
     typealias Player = FourtyTwoPlayer
 
     func testMiniMaxTreeSearch() {
-        typealias Strategy = MiniMaxTreeSearch<Game, TreeSearchPolicy>
+        typealias Policy = SimpleTreeSearchPolicy<Game>
+        typealias Strategy = MiniMaxTreeSearch<Game, Policy>
 
         var game = Game(player: Player())
-        let policy = TreeSearchPolicy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
@@ -32,10 +32,11 @@ class FourtyTwoTests: XCTestCase {
     }
 
     func testNegaMaxTreeSearch() {
-        typealias Strategy = NegaMaxTreeSearch<Game, TreeSearchPolicy>
+        typealias Policy = SimpleTreeSearchPolicy<Game>
+        typealias Strategy = NegaMaxTreeSearch<Game, Policy>
 
         var game = Game(player: Player())
-        let policy = TreeSearchPolicy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
