@@ -30,4 +30,21 @@ class FourtyTwoTests: XCTestCase {
             game = game.update(move)
         }
     }
+
+    func testNegaMaxTreeSearch() {
+        typealias Strategy = NegaMaxTreeSearch<Game, TreeSearchPolicy>
+
+        var game = Game(player: Player())
+        let policy = TreeSearchPolicy(maxMoves: 10, maxDepth: 10)
+        let strategy = Strategy(policy: policy)
+        while true {
+            let evaluation = game.evaluate()
+            guard !evaluation.isFinal else {
+                XCTAssertTrue(evaluation.isVictory)
+                break
+            }
+            let move = strategy.bestMove(game)!
+            game = game.update(move)
+        }
+    }
 }
