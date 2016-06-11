@@ -15,7 +15,7 @@ public struct NegaMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> 
 
     func negamax(game: Game, rootPlayer: G.Player, payload: NegaMaxPayload<G.Score>) -> Evaluation<G.Score> {
         let evaluation = game.evaluate()
-        guard !self.policy.hasReachedMaxDepth(payload.depth) && !evaluation.isFinal else {
+        guard !self.policy.hasReachedMaxExplorationDepth(payload.depth) && !evaluation.isFinal else {
             return evaluation
         }
         let nextDepth = payload.depth + 1

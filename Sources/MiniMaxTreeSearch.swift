@@ -16,7 +16,7 @@ public struct MiniMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> 
 
     func minimax(game: Game, rootPlayer: G.Player, payload: MiniMaxPayload<G.Score>) -> Evaluation<G.Score> {
         let evaluation = game.evaluate(forPlayer: rootPlayer)
-        guard !self.policy.hasReachedMaxDepth(payload.depth) && !evaluation.isFinal else {
+        guard !self.policy.hasReachedMaxExplorationDepth(payload.depth) && !evaluation.isFinal else {
             return evaluation
         }
         let maximize = game.playersAreAllied((rootPlayer, game.currentPlayer))

@@ -19,7 +19,7 @@ class TicTacToeTests: XCTestCase {
 
         let players: [Player] = [.X, .O]
         var game = Game(players: players)
-        let policy = Policy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
@@ -43,7 +43,7 @@ class TicTacToeTests: XCTestCase {
 
         let players: [Player] = [.X, .O]
         var game = Game(players: players)
-        let policy = Policy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()

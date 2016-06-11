@@ -18,7 +18,7 @@ class FourtyTwoTests: XCTestCase {
         typealias Strategy = MiniMaxTreeSearch<Game, Policy>
 
         var game = Game(player: Player())
-        let policy = Policy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
@@ -36,7 +36,7 @@ class FourtyTwoTests: XCTestCase {
         typealias Strategy = NegaMaxTreeSearch<Game, Policy>
 
         var game = Game(player: Player())
-        let policy = Policy(maxMoves: 10, maxDepth: 10)
+        let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
         while true {
             let evaluation = game.evaluate()
