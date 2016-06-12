@@ -9,11 +9,13 @@
 import Darwin
 
 extension GeneratorType {
+    /// Take first `0..<upperBound` elements of `self`.
     func take(upperBound: Int) -> Take<Self> {
         return Take(base: self, upperBound: upperBound)
     }
 }
 
+/// Take first `0..<upperBound` elements of `self`.
 struct Take<G: GeneratorType>: GeneratorType {
     typealias Base = G
     typealias Element = Base.Element
@@ -36,6 +38,10 @@ struct Take<G: GeneratorType>: GeneratorType {
 }
 
 extension CollectionType where Index == Int {
+    /// Select random element from `self`.
+    ///
+    /// - complexity: O(1).
+    /// - returns: Randomly selected element from `self`.
     func sample(randomSource: RandomSource) -> Generator.Element? {
         let count = self.count
         guard count > 0 else {
@@ -47,6 +53,10 @@ extension CollectionType where Index == Int {
 }
 
 extension GeneratorType {
+    /// Select random element from `self`.
+    ///
+    /// - complexity: O(`Array(self).count`).
+    /// - returns: Randomly selected element from `self`.
     mutating func sample(randomSource: RandomSource) -> Element? {
         var result = self.next()
         for (index, element) in GeneratorSequence(self).enumerate() {

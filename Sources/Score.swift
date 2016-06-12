@@ -6,18 +6,19 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Score protocol used for scores of game state evaluations.
 public protocol Score: Comparable {
+    /// Smallest possible evaluation score.
     static var min: Self { get }
+    /// Neutral evaluation score.
     static var mid: Self { get }
+    /// Largest possible evaluation score.
     static var max: Self { get }
-    func inverse() -> Self
-}
 
-extension Float: Score {
-    public static var min: Float { return -infinity }
-    public static var mid: Float { return 0.0 }
-    public static var max: Float { return infinity }
-    public func inverse() -> Float { return -self }
+    /// Invert evaluation score.
+    ///
+    /// - returns: Inverted evaluation score
+    func inverse() -> Self
 }
 
 extension Double: Score {
@@ -27,7 +28,59 @@ extension Double: Score {
     public func inverse() -> Double { return -self }
 }
 
+extension Float: Score {
+    public static var min: Float { return -infinity }
+    public static var mid: Float { return 0.0 }
+    public static var max: Float { return infinity }
+    public func inverse() -> Float { return -self }
+}
+
 extension Int: Score {
     public static var mid: Int { return 0 }
     public func inverse() -> Int { return -self }
+}
+
+extension UInt: Score {
+    public static var mid: UInt { return UInt.max / 2 }
+    public func inverse() -> UInt { return UInt.max - self }
+}
+
+extension Int64: Score {
+    public static var mid: Int64 { return 0 }
+    public func inverse() -> Int64 { return -self }
+}
+
+extension UInt64: Score {
+    public static var mid: UInt64 { return UInt64.max / 2 }
+    public func inverse() -> UInt64 { return UInt64.max - self }
+}
+
+extension Int32: Score {
+    public static var mid: Int32 { return 0 }
+    public func inverse() -> Int32 { return -self }
+}
+
+extension UInt32: Score {
+    public static var mid: UInt32 { return UInt32.max / 2 }
+    public func inverse() -> UInt32 { return UInt32.max - self }
+}
+
+extension Int16: Score {
+    public static var mid: Int16 { return 0 }
+    public func inverse() -> Int16 { return -self }
+}
+
+extension UInt16: Score {
+    public static var mid: UInt16 { return UInt16.max / 2 }
+    public func inverse() -> UInt16 { return UInt16.max - self }
+}
+
+extension Int8: Score {
+    public static var mid: Int8 { return 0 }
+    public func inverse() -> Int8 { return -self }
+}
+
+extension UInt8: Score {
+    public static var mid: UInt8 { return UInt8.max / 2 }
+    public func inverse() -> UInt8 { return UInt8.max - self }
 }

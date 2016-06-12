@@ -6,10 +6,24 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Generic tree representation with non-uniform branching factor.
 indirect enum GameTree<Node, Edge: Hashable> {
+    /// Leaf tree node
     case Leaf(Node)
+    /// Branch tree node
     case Branch(Node, [Edge: GameTree<Node, Edge>])
 
+    /// Execute passed closures based on node type.
+    ///
+    /// Implemented as:
+    /// ```
+    /// switch self {
+    /// case .Leaf(let node):
+    ///     return leaf(node)
+    /// case .Branch(let node, let edges):
+    ///     return branch(node, edges)
+    /// }
+    /// ```
     func analysis<T>(leaf leaf: Node -> T, branch: (Node, [Edge: GameTree<Node, Edge>]) -> T) -> T {
         switch self {
         case .Leaf(let node):
@@ -19,6 +33,7 @@ indirect enum GameTree<Node, Edge: Hashable> {
         }
     }
 
+    /// Generate dot-formatted ([Graphviz](http://graphviz.org/)) tree representation.
     func customDebugDescription(tree: GameTree<Node, Edge>, parentEdge: Edge? = nil, prefix: String = "root", closure: (Node, Edge?) -> (String, String?)) -> String {
         var string = ""
         if parentEdge == nil {

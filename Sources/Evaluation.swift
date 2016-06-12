@@ -6,6 +6,7 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Game state evaluation
 public enum Evaluation<T: Score> {
     /// Evaluation of a victory with additional score value
     case Victory(T)

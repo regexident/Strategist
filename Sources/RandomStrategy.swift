@@ -6,6 +6,7 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Implementation of a simple random-based strategy.
 public struct RandomStrategy<G: Game>: Strategy {
     public typealias Game = G
 

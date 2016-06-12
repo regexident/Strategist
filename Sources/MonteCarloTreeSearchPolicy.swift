@@ -8,14 +8,21 @@
 
 import Darwin
 
+/// Policy for more direct control over a strategy's execution
 public protocol MonteCarloTreeSearchPolicy: TreeSearchPolicy {
+    /// Whether the strategy should abort a given simulation.
     func hasReachedMaxSimulationDepth(depth: Int) -> Bool
+    /// Whether the strategy should execute another simulation.
     func shouldContinueSimulations(game: Game, simulationCount: Int) -> Bool
+    /// Whether the strategy should collapse a given tree into a single leaf node.
     func shouldCollapseTree(stats: TreeStats, subtrees: Int, depth: Int) -> Bool
+    /// Heuristic used for choosing game state subtree to further explore.
     func explorationHeuristic(stats: TreeStats, n: Int) -> Game.Score
+    /// Heuristic used for choosing game state subtree to further explore.
     func simulationHeuristic(game: Game, randomSource: RandomSource) -> Game.Move?
 }
 
+/// Simple minimal implementation of `MonteCarloTreeSearchPolicy`.
 public struct SimpleMonteCarloTreeSearchPolicy<G: Game where G.Score == Double>: MonteCarloTreeSearchPolicy {
     public typealias Game = G
 
@@ -60,6 +67,7 @@ public struct SimpleMonteCarloTreeSearchPolicy<G: Game where G.Score == Double>:
         return moves.sample(randomSource)
     }
 
+    /// Upper Confidence Bound 1 applied to trees ([UCT](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation))
     public func explorationHeuristic(stats: TreeStats, n: Int) -> Game.Score {
         let wi = Double(stats.score)
         let ni = Double(stats.plays)

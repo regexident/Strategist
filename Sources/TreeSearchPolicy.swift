@@ -8,12 +8,19 @@
 
 import Darwin
 
+/// Policy for more direct control over a strategy's execution
 public protocol TreeSearchPolicy {
+    /// The given game type to be reasoned about.
     associatedtype Game: Strategist.Game
+
+    /// Filter out moves to be ignored at any stage of the game.
     func filterMoves(state: Game, depth: Int, moves: AnyGenerator<Game.Move>) -> AnyGenerator<Game.Move>
+
+    /// Whether the strategy should abort a given exploration.
     func hasReachedMaxExplorationDepth(depth: Int) -> Bool
 }
 
+/// Simple minimal implementation of `TreeSearchPolicy`.
 public struct SimpleTreeSearchPolicy<G: Game>: TreeSearchPolicy {
     public typealias Game = G
 

@@ -35,7 +35,6 @@ public protocol Move: Hashable {}
 /// A representation of a game's state.
 ///
 /// - requires: Must be immutable & have value semantics.
-///
 /// - note: Depending on the game's nature it may be appropriate to model
 /// the game's state as a history of moves, in addition to a simple snapshot.
 ///

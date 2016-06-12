@@ -8,10 +8,13 @@
 
 import Darwin
 
+/// Function type used for injecting random sources into Strategist.
 public typealias RandomSource = UInt32 -> UInt32
 
+/// Convenience function for generating curried fake random sources.
 public func fakeRandomSource(output: UInt32) -> RandomSource {
-    return { _ in
+    return { upperBound in
+        assert(output < upperBound)
         return output
     }
 }
