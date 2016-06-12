@@ -6,10 +6,16 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Protocol to be implemented for strategy algorithms.
 public protocol Strategy {
+    /// The given game type to be reasoned upon.
     associatedtype Game: Strategist.Game
 
+    /// Evaluates the available moves at the `game`'s current state
     func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<Game.Score>)>
+
+
+    func update(move: Game.Move) -> Self
 }
 
 extension Strategy {

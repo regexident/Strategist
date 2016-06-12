@@ -19,6 +19,10 @@ public struct RandomStrategy<G: Game>: Strategy {
             return ($0, Evaluation.Ongoing(Game.Score.mid))
         })
     }
+
+    public func update(move: Game.Move) -> RandomStrategy {
+        return self
+    }
 }
 
 extension RandomStrategy: NonDeterministicStrategy {}

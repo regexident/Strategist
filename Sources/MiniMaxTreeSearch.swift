@@ -58,6 +58,10 @@ extension MiniMaxTreeSearch: Strategy {
             return (move, evaluation)
         })
     }
+
+    public func update(move: Game.Move) -> MiniMaxTreeSearch {
+        return self
+    }
 }
 
 extension MiniMaxTreeSearch: DeterministicStrategy {}

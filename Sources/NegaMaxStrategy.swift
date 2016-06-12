@@ -70,6 +70,10 @@ extension NegaMaxTreeSearch: Strategy {
             return (move, evaluation)
         })
     }
+
+    public func update(move: Game.Move) -> NegaMaxTreeSearch {
+        return self
+    }
 }
 
 extension NegaMaxTreeSearch: DeterministicStrategy {}
