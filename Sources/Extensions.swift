@@ -34,3 +34,26 @@ struct Take<G: GeneratorType>: GeneratorType {
         return self.base.next()
     }
 }
+
+extension CollectionType where Index == Int {
+    func sample(randomSource: RandomSource) -> Generator.Element? {
+        let count = self.count
+        guard count > 0 else {
+            return nil
+        }
+        let index = randomSource(UInt32(count))
+        return self[Int(index)]
+    }
+}
+
+extension GeneratorType {
+    mutating func sample(randomSource: RandomSource) -> Element? {
+        var result = self.next()
+        for (index, element) in GeneratorSequence(self).enumerate() {
+            if Int(randomSource(UInt32(index))) == 0 {
+                result = element
+            }
+        }
+        return result
+    }
+}

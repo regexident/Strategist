@@ -60,4 +60,50 @@ class TicTacToeTests: XCTestCase {
             }
         }
     }
+
+    func testMonteCarloTreeSearch() {
+        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game>
+        typealias Strategy = MonteCarloTreeSearch<Game, Policy>
+        
+        let randomSource = arc4random_uniform
+        let rate = 0.75
+        let plays = 10
+        let wins = (0..<plays).reduce(0) { wins, _ in
+            let players: [TicTacToePlayer] = [.X, .O]
+            var game = Game(players: players)
+            let policy = Policy(
+                maxMoves: 9,
+                maxExplorationDepth: 9,
+                maxSimulationDepth: 9,
+                simulations: 100,
+                pruningThreshold: 1000,
+                c: sqrt(2.0)
+            )
+            var strategy = Strategy(game: game, player: players[0], policy: policy)
+            let randomStrategy = RandomStrategy<TicTacToeGame>()
+            var i = 0
+            while true {
+                let evaluation = game.evaluate()
+                guard !evaluation.isFinal else {
+                    if (i % 2 == 0) && (evaluation.isDraw || evaluation.isVictory) {
+                        return wins + 1
+                    } else if (evaluation.isDraw || evaluation.isDefeat) {
+                        return wins + 1
+                    }
+                    return wins
+                }
+                if i % 2 == 0 {
+                    let epochs = 10
+                    for _ in 0..<epochs {
+                        strategy = strategy.refine(randomSource)
+                    }
+                }
+                let move = (i % 2 == 0) ? strategy.bestMove(game, randomSource: randomSource)! : randomStrategy.bestMove(game)!
+                strategy = strategy.update(move)
+                game = game.update(move)
+                i += 1
+            }
+        }
+        XCTAssert(wins >= Int(Double(plays) * rate))
+    }
 }
