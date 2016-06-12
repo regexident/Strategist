@@ -20,7 +20,7 @@ extension FourtyTwoPlayer: CustomStringConvertible {
     }
 }
 
-enum FourtyTwoMove {
+enum FourtyTwoMove: Strategist.Move {
     case Add(Int)
     case Mul(Int)
 }
@@ -45,7 +45,14 @@ extension FourtyTwoMove: Hashable {
     }
 }
 
-extension FourtyTwoMove: Strategist.Move {}
+extension FourtyTwoMove: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case let .Add(value): return "+ \(value)"
+        case let .Mul(value): return "* \(value)"
+        }
+    }
+}
 
 /// The objective of this ficticious single-player dummy game
 /// is to reach exactly 42 with the least amount of moves by either
@@ -68,7 +75,7 @@ struct FourtyTwoGame: Strategist.Game {
     }
 
     init(player: Player) {
-        self.init(player: player, sum: 0, moves: [])
+        self.init(player: player, sum: 1, moves: [])
     }
 
     private init(player: Player, sum: Int, moves: [Move]) {
@@ -129,6 +136,6 @@ func ==(lhs: FourtyTwoGame, rhs: FourtyTwoGame) -> Bool {
 
 extension FourtyTwoGame: CustomStringConvertible {
     var description: String {
-        return "\(self.moves)"
+        return "\(self.sum) @ \(self.moves)"
     }
 }

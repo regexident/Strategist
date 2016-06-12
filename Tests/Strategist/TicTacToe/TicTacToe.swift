@@ -81,7 +81,7 @@ extension TicTacToeTile: CustomStringConvertible {
     }
 }
 
-struct TicTacToeMove {
+struct TicTacToeMove: Strategist.Move {
     let index: Int
     let player: TicTacToePlayer
 }
@@ -92,7 +92,7 @@ extension TicTacToeMove: CustomStringConvertible {
     }
 }
 
-extension TicTacToeMove: Strategist.Move {
+extension TicTacToeMove: Hashable {
     var hashValue: Int {
         return index
     }
