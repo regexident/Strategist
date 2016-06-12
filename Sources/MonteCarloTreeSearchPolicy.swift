@@ -30,7 +30,7 @@ public struct UpperConfidenceBoundHeuristic<G: Game where G.Score == Double>: Sc
     }
 
     public func scoreMove(moveStats: TreeStats, parentPlays: Int) -> Score {
-        let wi = Double(moveStats.score)
+        let wi = Double(moveStats.wins)
         let ni = Double(moveStats.plays)
         let n = Double(parentPlays)
         return (wi / ni) + self.c * sqrt(log(n) / ni)
@@ -94,7 +94,7 @@ public struct SimpleMonteCarloTreeSearchPolicy<G, H where G: Game, G.Score == H.
     }
 
     public func shouldCollapseTree(stats: TreeStats, subtrees: Int, depth: Int) -> Bool {
-        return (stats.score == 0) && (stats.plays > self.pruningThreshold)
+        return (stats.wins == 0) && (stats.plays > self.pruningThreshold)
     }
 
     public func scoreMove(moveStats: TreeStats, parentPlays: Int) -> Score {

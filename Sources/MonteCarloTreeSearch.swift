@@ -276,42 +276,42 @@ extension MonteCarloTreeSearch: CustomDebugStringConvertible {
 }
 
 public struct TreeStats {
-    public var score: Int
+    public var wins: Int
     public var plays: Int
 
     init(score: Int, plays: Int) {
-        self.score = score
+        self.wins = score
         self.plays = plays
     }
 
     func averageWith(other: TreeStats) -> TreeStats {
-        let score = (self.score + other.score + 1) / 2
+        let score = (self.wins + other.wins + 1) / 2
         let plays = (self.plays + other.plays + 1) / 2
         return TreeStats(score: score, plays: plays)
     }
 }
 
 func +(lhs: TreeStats, rhs: TreeStats) -> TreeStats {
-    return TreeStats(score: lhs.score + rhs.score, plays: lhs.plays + rhs.plays)
+    return TreeStats(score: lhs.wins + rhs.wins, plays: lhs.plays + rhs.plays)
 }
 
 func -(lhs: TreeStats, rhs: TreeStats) -> TreeStats {
-    return TreeStats(score: lhs.score - rhs.score, plays: lhs.plays - rhs.plays)
+    return TreeStats(score: lhs.wins - rhs.wins, plays: lhs.plays - rhs.plays)
 }
 
 func +=(inout lhs: TreeStats, rhs: TreeStats) {
-    lhs.score += rhs.score
+    lhs.wins += rhs.wins
     lhs.plays += rhs.plays
 }
 
 func -=(inout lhs: TreeStats, rhs: TreeStats) {
-    lhs.score -= rhs.score
+    lhs.wins -= rhs.wins
     lhs.plays -= rhs.plays
 }
 
 extension TreeStats: CustomStringConvertible {
     public var description: String {
-        return "\(self.score) / \(self.plays)"
+        return "\(self.wins) / \(self.plays)"
     }
 }
 
