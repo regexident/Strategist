@@ -50,6 +50,20 @@ public protocol MonteCarloTreeSearchPolicy: TreeSearchPolicy, ScoringHeuristic {
     /// Heuristic used for scoring a given move.
     func scoreMove(stats: TreeStats, parentPlays: Int) -> Score
 
+    /// Calculate reward from an evaluation.
+    ///
+    /// #### Example:
+    /// ```
+    /// func reward(evaluation: Evaluation<Game.Score>) -> Int {
+    ///     switch evaluation {
+    ///     case .Victory: return 1
+    ///     case .Defeat: return 0
+    ///     default: return 0
+    ///     }
+    /// }
+    /// ```
+    func reward(evaluation: Evaluation<Game.Score>) -> Int
+
     /// Heuristic used for choosing game state subtree to further explore.
     func explorationMove<M: GeneratorType where M.Element == (Game.Move, TreeStats)>(availableMoves: M, explorationDepth: Int, plays: Int, randomSource: RandomSource) -> Game.Move?
     /// Heuristic used for choosing game state subtree to further explore.
@@ -99,6 +113,14 @@ public struct SimpleMonteCarloTreeSearchPolicy<G, H where G: Game, G.Score == H.
 
     public func scoreMove(moveStats: TreeStats, parentPlays: Int) -> Score {
         return self.scoringHeuristic.scoreMove(moveStats, parentPlays: parentPlays)
+    }
+
+    public func reward(evaluation: Evaluation<Game.Score>) -> Int {
+        switch evaluation {
+        case .Victory: return 1
+        case .Defeat: return 0
+        default: return 0
+        }
     }
 
     public func explorationMove<M: GeneratorType where M.Element == (Game.Move, TreeStats)>(availableMoves: M, explorationDepth: Int, plays: Int, randomSource: RandomSource) -> Game.Move? {

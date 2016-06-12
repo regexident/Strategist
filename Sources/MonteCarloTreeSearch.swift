@@ -20,7 +20,7 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
     let tree: Tree
 
     public init(game: G, player: G.Player, policy: P) {
-        let tree = MonteCarloTreeSearch.initialTreeForGame(game)
+        let tree = MonteCarloTreeSearch.initialTreeForGame(game, policy: policy)
         self.init(game: game, player: player, policy: policy, tree: tree)
     }
 
@@ -37,12 +37,12 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
         let player = self.player
         let policy = self.policy
         let tree = self.tree.analysis(leaf: { node in
-            return MonteCarloTreeSearch.initialTreeForGame(self.game)
+            return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)
         }, branch: { node, edges in
             if let index = edges.indexOf({ $0.0 == move }) {
                 return edges[index].1
             } else {
-                return MonteCarloTreeSearch.initialTreeForGame(self.game)
+                return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)
             }
         })
         return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
@@ -161,7 +161,7 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
     func simulateSubtree(rootPlayer: G.Player, payload: MonteCarloPayload<G>) -> Tree {
         var evaluation = payload.game.evaluate(forPlayer: rootPlayer)
         guard !evaluation.isFinal else {
-            let score = MonteCarloTreeSearch.evaluationAsDelta(evaluation)
+            let score = self.policy.reward(evaluation)
             let stats = TreeStats(score: score, plays: 1)
             let node = TreeNode(stats: stats, explorable: false)
             return .Leaf(node)
@@ -184,7 +184,7 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
                 game = game.update(move)
                 simulationDepth += 1
             }
-            score += MonteCarloTreeSearch.evaluationAsDelta(evaluation)
+            score += self.policy.reward(evaluation)
             plays += 1
         }
         let stats = TreeStats(score: score, plays: plays)
@@ -193,11 +193,11 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
     }
 
     @warn_unused_result()
-    static func initialTreeForGame(game: G) -> Tree {
+    static func initialTreeForGame(game: G, policy: P) -> Tree {
         let evaluation = game.evaluate()
         let node: TreeNode
         if evaluation.isFinal {
-            let delta = MonteCarloTreeSearch.evaluationAsDelta(evaluation)
+            let delta = policy.reward(evaluation)
             let stats = TreeStats(score: delta, plays: 1)
             node = TreeNode(stats: stats, explorable: false)
         } else {
@@ -205,18 +205,6 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
             node = TreeNode(stats: stats, explorable: true)
         }
         return .Leaf(node)
-    }
-
-    @warn_unused_result()
-    static func evaluationAsDelta(evaluation: Evaluation<Game.Score>) -> Int {
-        switch evaluation {
-        case .Victory:
-            return 1
-        case .Defeat:
-            return 0
-        default:
-            return 0
-        }
     }
 
     typealias Node = TreeNode
