@@ -69,7 +69,7 @@ class TicTacToeTests: XCTestCase {
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
-            let players: [TicTacToePlayer] = [.X, .O]
+            let players: [Player] = [.X, .O]
             var game = Game(players: players)
             let policy = Policy(
                 maxMoves: 9,

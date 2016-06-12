@@ -6,10 +6,6 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-public enum StrategyError: ErrorType {
-    case UnexpectedEndOfGame
-}
-
 public protocol Strategy {
     associatedtype Game: Strategist.Game
 

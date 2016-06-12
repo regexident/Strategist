@@ -106,7 +106,7 @@ extension Game {
     /// Evaluate the game at its current state for the current player.
     ///had
     /// - returns: Evaluation of game's current state from the perspective of the game's current player.
-    func evaluate() -> Evaluation<Score> {
+    public func evaluate() -> Evaluation<Score> {
         return self.evaluate(forPlayer: self.currentPlayer)
     }
 

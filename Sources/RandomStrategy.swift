@@ -9,6 +9,10 @@
 public struct RandomStrategy<G: Game>: Strategy {
     public typealias Game = G
 
+    public init() {
+
+    }
+    
     public func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<Game.Score>)> {
         let moves = game.availableMoves()
         return AnySequence(moves.lazy.map {
