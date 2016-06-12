@@ -67,3 +67,37 @@ extension GeneratorType {
         return result
     }
 }
+
+extension GeneratorType where Element : Comparable {
+    //Returns a random sample from maximum elements in self or nil if the sequence is empty.
+    //
+    /// -complexity: O(elements.count).
+    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
+        return self.sampleMaxElement(randomSource) { $0 < $1 }
+    }
+}
+
+extension GeneratorType {
+    /// Returns a random sample from maximum elements in self or nil if the sequence is empty.
+    ///
+    /// - complexity: O(elements.count).
+    /// - requires: `isOrderedBefore` is a strict weak ordering over `self`.
+    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource, @noescape isOrderedBefore: (Element, Element) throws -> Bool) rethrows -> Element? {
+        guard var maxElement = self.next() else {
+            return nil
+        }
+        var maxElementCount = 0
+        while let element = self.next() {
+            if try isOrderedBefore(maxElement, element) {
+                maxElement = element
+                maxElementCount = 1
+            } else if try !isOrderedBefore(element, maxElement) {
+                if randomSource(UInt32(maxElementCount)) == 0 {
+                    maxElement = element
+                }
+                maxElementCount += 1
+            }
+        }
+        return maxElement
+    }
+}

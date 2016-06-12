@@ -7,11 +7,20 @@
 //
 
 /// Generic tree representation with non-uniform branching factor.
-indirect enum GameTree<Node, Edge: Hashable> {
+public indirect enum GameTree<Node, Edge: Hashable> {
     /// Leaf tree node
     case Leaf(Node)
     /// Branch tree node
     case Branch(Node, [Edge: GameTree<Node, Edge>])
+
+    public var node: Node {
+        switch self {
+        case .Leaf(let node):
+            return node
+        case .Branch(let node, _):
+            return node
+        }
+    }
 
     /// Execute passed closures based on node type.
     ///
@@ -24,7 +33,7 @@ indirect enum GameTree<Node, Edge: Hashable> {
     ///     return branch(node, edges)
     /// }
     /// ```
-    func analysis<T>(leaf leaf: Node -> T, branch: (Node, [Edge: GameTree<Node, Edge>]) -> T) -> T {
+    public func analysis<T>(leaf leaf: Node -> T, branch: (Node, [Edge: GameTree<Node, Edge>]) -> T) -> T {
         switch self {
         case .Leaf(let node):
             return leaf(node)
@@ -34,7 +43,7 @@ indirect enum GameTree<Node, Edge: Hashable> {
     }
 
     /// Generate dot-formatted ([Graphviz](http://graphviz.org/)) tree representation.
-    func customDebugDescription(tree: GameTree<Node, Edge>, parentEdge: Edge? = nil, prefix: String = "root", closure: (Node, Edge?) -> (String, String?)) -> String {
+    public func customDebugDescription(tree: GameTree<Node, Edge>, parentEdge: Edge? = nil, prefix: String = "root", closure: (Node, Edge?) -> (String, String?)) -> String {
         var string = ""
         if parentEdge == nil {
             string += "digraph GameTree {"
@@ -56,7 +65,7 @@ indirect enum GameTree<Node, Edge: Hashable> {
 }
 
 extension GameTree: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         switch self {
         case .Leaf(let node):
             return ".Leaf(\(node))"
@@ -68,7 +77,7 @@ extension GameTree: CustomStringConvertible {
 }
 
 extension GameTree: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return self.customDebugDescription(self) { node, edge in
             let nodeLabel = "\(node)"
             let edgeLabel = edge.map { "\($0)" }

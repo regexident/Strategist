@@ -143,5 +143,5 @@ public protocol ReversibleGame: Game {
     /// Rewind the game by undoing a move to the game's current state.
     ///
     /// - returns: An updated game at the newly calculated prior state.
-    func reverse(move: Move) -> Self // FIXME: should this throw?
+    func reverse(move: Move) -> Self
 }

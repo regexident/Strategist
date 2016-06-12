@@ -50,7 +50,8 @@ class FourtyTwoTests: XCTestCase {
     }
 
     func testMonteCarloTreeSearch() {
-        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game>
+        typealias Heuristic = UpperConfidenceBoundHeuristic<Game>
+        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game, Heuristic>
         typealias Strategy = MonteCarloTreeSearch<Game, Policy>
 
         let rate = 0.75
@@ -58,13 +59,14 @@ class FourtyTwoTests: XCTestCase {
         let wins = (0..<plays).reduce(0) { wins, _ in
             let player = Player()
             var game = Game(player: player)
+            let heuristic = Heuristic(c: sqrt(2.0))
             let policy = Policy(
                 maxMoves: 10,
                 maxExplorationDepth: 10,
                 maxSimulationDepth: 20,
                 simulations: 100,
                 pruningThreshold: 1000,
-                c: sqrt(2.0)
+                scoringHeuristic: heuristic
             )
             var strategy = Strategy(game: game, player: player, policy: policy)
             while true {

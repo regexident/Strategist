@@ -9,7 +9,7 @@
 /// Implementation of [Monte Carlo Tree Search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) algorithm.
 ///
 /// - note: Due to internal state a separate instance of `MonteCarloTreeSearch` has to be used for for each player in a game.
-public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPolicy, P.Game == G> {
+public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPolicy, P.Game == G, P.Score == G.Score> {
 
     typealias Tree = Strategist.GameTree<TreeNode, G.Move>
 
@@ -103,64 +103,58 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
         let moves = payload.game.availableMoves()
         let filteredMoves = policy.filterMoves(payload.game, depth: payload.explorationDepth, moves: moves)
         let unexploredMoves = filteredMoves.filter { !exploredMoves.contains($0) }
-        var refinedSubtrees = edges
+        var refinedEdges = edges
         var refinedNode = node
-        if unexploredMoves.count > 0 {
-            let index = Int(payload.randomSource(UInt32(unexploredMoves.count)))
-            let move = unexploredMoves[index]
-            let nextPayload = MonteCarloPayload<G>(
-                game: payload.game.update(move),
-                randomSource: payload.randomSource,
-                explorationDepth: payload.explorationDepth + 1
-            )
-            let refinedSubtree = self.simulateSubtree(payload.game.currentPlayer, payload: nextPayload)
-            let refinedSubnode = refinedSubtree.analysis(leaf: { node in node }, branch: { node, _ in node })
-            refinedNode.stats += refinedSubnode.stats
-            if !policy.hasReachedMaxExplorationDepth(payload.explorationDepth) {
-                refinedSubtrees[move] = refinedSubtree
-            }
-        }
         refinedNode.explorable = unexploredMoves.count > 1
-        return .Branch(refinedNode, refinedSubtrees)
+        let chosenMove = self.policy.simulationMove(
+            unexploredMoves.generate(),
+            simulationDepth: 0,
+            randomSource: payload.randomSource
+        )
+        guard let move = chosenMove else {
+            return .Branch(refinedNode, refinedEdges)
+        }
+        let nextPayload = MonteCarloPayload<G>(
+            game: payload.game.update(move),
+            randomSource: payload.randomSource,
+            explorationDepth: payload.explorationDepth + 1
+        )
+        let refinedSubtree = self.simulateSubtree(payload.game.currentPlayer, payload: nextPayload)
+        let refinedSubnode = refinedSubtree.node
+        refinedNode.stats += refinedSubnode.stats
+        if !policy.hasReachedMaxExplorationDepth(payload.explorationDepth) {
+            refinedEdges[move] = refinedSubtree
+        }
+        return .Branch(refinedNode, refinedEdges)
     }
 
     @warn_unused_result()
     func refineExploredSubtree(node: TreeNode, edges: [G.Move: Tree], payload: MonteCarloPayload<G>) -> Tree {
-        let n = node.stats.plays
-        var branchesGenerator = edges.generate()
-        var maxSubtree = branchesGenerator.next()!
-        var maxScore = G.Score.min
-        var count = 0
-        while let (move, subtree) = branchesGenerator.next() {
-            let subnode = subtree.analysis(leaf: { node in node }, branch: { node, _ in node })
-            let score = self.policy.explorationHeuristic(subnode.stats, n: n)
-            if score > maxScore {
-                maxScore = score
-                maxSubtree = (move, subtree)
-                count = 1
-            } else if score == maxScore {
-                if Int(payload.randomSource(UInt32(count))) == 0 {
-                    maxScore = score
-                    maxSubtree = (move, subtree)
-                }
-                count += 1
+        let plays = node.stats.plays
+        var edgesGenerator = edges.generate()
+        let generator: AnyGenerator<(G.Move, TreeStats)> = AnyGenerator {
+            return edgesGenerator.next().map { move, subtree in
+                return (move, subtree.node.stats)
             }
         }
-        let (move, subtree) = maxSubtree
-        let subnode = subtree.analysis(leaf: { node in node }, branch: { node, _ in node })
+        guard let move = self.policy.explorationMove(generator, explorationDepth: payload.explorationDepth, plays: plays, randomSource: payload.randomSource) else {
+            return .Branch(node, edges)
+        }
+        guard let subtree = edges[move] else {
+            return .Branch(node, edges)
+        }
         var refinedNode = node
-        refinedNode.stats -= subnode.stats
+        refinedNode.stats -= subtree.node.stats
         let payload = MonteCarloPayload<G>(
             game: payload.game.update(move),
             randomSource: payload.randomSource,
             explorationDepth: payload.explorationDepth + 1
         )
         let refinedSubtree = self.refineSubtree(subtree, payload: payload)
-        let refinedSubnode = refinedSubtree.analysis(leaf: { node in node }, branch: { node, _ in node })
-        refinedNode.stats += refinedSubnode.stats
-        var refinedSubtrees = edges
-        refinedSubtrees[move] = refinedSubtree
-        return .Branch(refinedNode, refinedSubtrees)
+        refinedNode.stats += refinedSubtree.node.stats
+        var refinedEdges = edges
+        refinedEdges[move] = refinedSubtree
+        return .Branch(refinedNode, refinedEdges)
     }
 
     @warn_unused_result()
@@ -182,7 +176,8 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
                 guard !evaluation.isFinal else {
                     break
                 }
-                let choice = self.policy.simulationHeuristic(game, randomSource: payload.randomSource)
+                let availableMoves = game.availableMoves()
+                let choice = self.policy.simulationMove(availableMoves, simulationDepth: simulationDepth, randomSource: payload.randomSource)
                 guard let move = choice else {
                     break
                 }
@@ -338,18 +333,17 @@ extension MonteCarloTreeSearch: Strategy {
         assert(game.currentPlayer == self.player)
         let player = game.currentPlayer
         let (node, edges) = self.tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
-        let n = node.stats.plays
+        let parentPlays = node.stats.plays
         let moves = game.availableMoves()
-        let filteredMoves = policy.filterMoves(game, depth: 0, moves: moves)
+        let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
         return AnySequence(filteredMoves.lazy.map { move in
             if let subtree = edges[move] {
                 let nextGame = game.update(move)
                 let evaluation = nextGame.evaluate(forPlayer: player)
                 switch evaluation {
                 case .Ongoing(_):
-                    let subnode = subtree.analysis(leaf: { node in node }, branch: { node, _ in node })
-                    let score = self.policy.explorationHeuristic(subnode.stats, n: n)
-                    return (move, .Ongoing(score))
+                    let score = self.policy.scoreMove(subtree.node.stats, parentPlays: parentPlays)
+                    return (move, Evaluation.Ongoing(score))
                 default:
                     return (move, evaluation)
                 }

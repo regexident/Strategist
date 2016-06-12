@@ -62,21 +62,23 @@ class TicTacToeTests: XCTestCase {
     }
 
     func testMonteCarloTreeSearch() {
-        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game>
+        typealias Heuristic = UpperConfidenceBoundHeuristic<Game>
+        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game, Heuristic>
         typealias Strategy = MonteCarloTreeSearch<Game, Policy>
-        
+
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
             let players: [Player] = [.X, .O]
             var game = Game(players: players)
+            let heuristic = Heuristic(c: sqrt(2.0))
             let policy = Policy(
                 maxMoves: 9,
                 maxExplorationDepth: 9,
                 maxSimulationDepth: 9,
                 simulations: 100,
                 pruningThreshold: 1000,
-                c: sqrt(2.0)
+                scoringHeuristic: heuristic
             )
             var strategy = Strategy(game: game, player: players[0], policy: policy)
             let randomStrategy = RandomStrategy<TicTacToeGame>()
