@@ -58,7 +58,7 @@ extension GeneratorType {
     mutating func sample(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
         var result = self.next()
         for (index, element) in GeneratorSequence(self).enumerate() {
-            if Int(randomSource(UInt32(index))) == 0 {
+            if Int(randomSource(UInt32(index + 2))) == 0 {
                 result = element
             }
         }
