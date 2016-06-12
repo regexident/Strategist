@@ -6,8 +6,6 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-import Darwin
-
 extension GeneratorType {
     /// Take first `0..<upperBound` elements of `self`.
     func take(upperBound: Int) -> Take<Self> {

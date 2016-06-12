@@ -6,10 +6,7 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-import Darwin
-
 public struct MiniMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> {
-
     let policy: P
 
     public init(policy: P) {

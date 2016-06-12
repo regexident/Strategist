@@ -6,8 +6,6 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-import Darwin
-
 /// Policy for more direct control over a strategy's execution
 public protocol TreeSearchPolicy {
     /// The given game type to be reasoned about.

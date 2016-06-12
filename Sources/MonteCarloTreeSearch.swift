@@ -6,9 +6,6 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-import Darwin
-import Foundation
-
 public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPolicy, P.Game == G> {
 
     typealias Tree = Strategist.GameTree<TreeNode, G.Move>
