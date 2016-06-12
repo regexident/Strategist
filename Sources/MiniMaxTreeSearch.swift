@@ -6,6 +6,9 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Implementation of [Minimax Tree Search](https://en.wikipedia.org/wiki/Minimax#Combinatorial_game_theory) algorithm with [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
+///
+/// - note: Due to the lack of internal state a single instance of `MiniMaxTreeSearch` can be shared for several players in a game.
 public struct MiniMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> {
     let policy: P
 

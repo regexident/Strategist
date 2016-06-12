@@ -6,6 +6,9 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Implementation of [Monte Carlo Tree Search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) algorithm.
+///
+/// - note: Due to internal state a separate instance of `MonteCarloTreeSearch` has to be used for for each player in a game.
 public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPolicy, P.Game == G> {
 
     typealias Tree = Strategist.GameTree<TreeNode, G.Move>

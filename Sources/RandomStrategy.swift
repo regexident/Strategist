@@ -7,6 +7,8 @@
 //
 
 /// Implementation of a simple random-based strategy.
+///
+/// - note: Due to the lack of internal state a single instance of `RandomStrategy` can be shared for several players in a game.
 public struct RandomStrategy<G: Game>: Strategy {
     public typealias Game = G
     

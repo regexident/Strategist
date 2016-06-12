@@ -6,6 +6,9 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
+/// Implementation of [Negamax Tree Search](https://en.wikipedia.org/wiki/Negamax#Negamax_with_alpha_beta_pruning) algorithm with [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
+///
+/// - note: Due to the lack of internal state a single instance of `NegaMaxTreeSearch` can be shared for several players in a game.
 public struct NegaMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> {
     let policy: P
 
