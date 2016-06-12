@@ -42,8 +42,8 @@ public struct SimpleMonteCarloTreeSearchPolicy<G: Game where G.Score == Double>:
         self.c = c
     }
     
-    public func filterMoves(state: Game, depth: Int, moves: AnyGenerator<Game.Move>) -> AnyGenerator<Game.Move> {
-        return AnyGenerator(moves.generate().take(self.maxMoves))
+    public func filterMoves<G: GeneratorType where G.Element == Game.Move>(state: Game, depth: Int, moves: G) -> AnyGenerator<Game.Move> {
+        return AnyGenerator(moves.take(self.maxMoves))
     }
 
     public func hasReachedMaxExplorationDepth(depth: Int) -> Bool {
