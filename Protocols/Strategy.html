@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Strategy Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/Strategy" class="dashAnchor"></a>
+    <a title="Strategy Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Strategist Docs</a> (53% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Strategist Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Strategy Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Evaluation.html">Evaluation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GameTree.html">GameTree</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Sd">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Sf">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Si">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int16">Int16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int32">Int32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int64">Int64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs4Int8">Int8</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Su">UInt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt16">UInt16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt32">UInt32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt64">UInt64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5UInt8">UInt8</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:F10Strategist19defaultRandomSourceFVs6UInt32S0_">defaultRandomSource(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:F10Strategist16fakeRandomSourceFVs6UInt32FS0_S0_">fakeRandomSource(_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Game.html">Game</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MonteCarloTreeSearchPolicy.html">MonteCarloTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P10Strategist4Move">Move</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P10Strategist6Player">Player</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ReversibleGame.html">ReversibleGame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Score.html">Score</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ScoringHeuristic.html">ScoringHeuristic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Strategy.html">Strategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TreeSearchPolicy.html">TreeSearchPolicy</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist17MiniMaxTreeSearch">MiniMaxTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist20MonteCarloTreeSearch">MonteCarloTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist17NegaMaxTreeSearch">NegaMaxTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist14RandomStrategy">RandomStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist32SimpleMonteCarloTreeSearchPolicy">SimpleMonteCarloTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist22SimpleTreeSearchPolicy">SimpleTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist29UpperConfidenceBoundHeuristic">UpperConfidenceBoundHeuristic</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Strategist12RandomSource">RandomSource</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Strategy</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Strategy</span></code></pre>
+
+                </div>
+              </div>
+            <p>Protocol to be implemented for strategy algorithms.</p>
+
+<div class="aside aside-requires">
+    <p class="aside-title">Requires</p>
+    Must be immutable &amp; have value semantics.
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist8Strategy14evaluatedMovesFwx4GameGVs11AnySequenceTWxS1_4Move_GOS_10EvaluationWxS1_5Score____"></a>
+                    <a name="//apple_ref/swift/Method/evaluatedMoves(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist8Strategy14evaluatedMovesFwx4GameGVs11AnySequenceTWxS1_4Move_GOS_10EvaluationWxS1_5Score____">evaluatedMoves(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Evaluates the available moves for the <code>game</code>&rsquo;s current state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">evaluatedMoves</span><span class="p">(</span><span class="nv">game</span><span class="p">:</span> <span class="kt">Game</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnySequence</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Game</span><span class="o">.</span><span class="kt">Move</span><span class="p">,</span> <span class="kt">Evaluation</span><span class="o">&lt;</span><span class="kt">Game</span><span class="o">.</span><span class="kt">Score</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Lazy sequence of evaluated moves.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P10Strategist8Strategy4Game"></a>
+                    <a name="//apple_ref/swift/Alias/Game" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P10Strategist8Strategy4Game">Game</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The given game type to be reasoned about.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">as</span><span class="n">sociatedtype</span> <span class="kt">Game</span><span class="p">:</span> <span class="kt">Strategist</span><span class="o">.</span><span class="kt">Game</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist8Strategy6updateFWx4Game4Move_x"></a>
+                    <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist8Strategy6updateFWx4Game4Move_x">update(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Updates strategy&rsquo;s internal state for chosen <code>move</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">move</span><span class="p">:</span> <span class="kt">Game</span><span class="o">.</span><span class="kt">Move</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Updated strategy.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE10StrategistPS_8Strategy9bestMovesFwx4GameGSaWxS1_4Move__"></a>
+                    <a name="//apple_ref/swift/Method/bestMoves(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE10StrategistPS_8Strategy9bestMovesFwx4GameGSaWxS1_4Move__">bestMoves(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Evaluates the available moves for the <code>game</code>&rsquo;s current state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">bestMoves</span><span class="p">(</span><span class="nv">game</span><span class="p">:</span> <span class="kt">Game</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Game</span><span class="o">.</span><span class="kt">Move</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Lazy sequence of evaluated moves.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE10StrategistPS_8Strategy19firstMaximizingMoveFwx4GameGSqWxS1_4Move__"></a>
+                    <a name="//apple_ref/swift/Method/firstMaximizingMove(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE10StrategistPS_8Strategy19firstMaximizingMoveFwx4GameGSqWxS1_4Move__">firstMaximizingMove(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Greedily selects the first encountered maximizing
+available move for the <code>game</code>&rsquo;s current state.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The selection is deterministic.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">firstMaximizingMove</span><span class="p">(</span><span class="nv">game</span><span class="p">:</span> <span class="kt">Game</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Game</span><span class="o">.</span><span class="kt">Move</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>First maximizing available move.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE10StrategistPS_8Strategy20randomMaximizingMoveFTwx4Game12randomSourceGSqFVs6UInt32S2___GSqWxS1_4Move__"></a>
+                    <a name="//apple_ref/swift/Method/randomMaximizingMove(_:randomSource:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE10StrategistPS_8Strategy20randomMaximizingMoveFTwx4Game12randomSourceGSqFVs6UInt32S2___GSqWxS1_4Move__">randomMaximizingMove(_:randomSource:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Randomly selects from the encountered maximizing
+available move for the <code>game</code>&rsquo;s current state.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The selection is deterministic.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomMaximizingMove</span><span class="p">(</span><span class="nv">game</span><span class="p">:</span> <span class="kt">Game</span><span class="p">,</span> <span class="nv">randomSource</span><span class="p">:</span> <span class="p">(</span><span class="kt">UInt32</span> <span class="o">-&gt;</span> <span class="kt">UInt32</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Game</span><span class="o">.</span><span class="kt">Move</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Randomly chosen maximizing available move.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/regexident/Strategist" target="_blank" rel="external">Vincent Esche</a>. All rights reserved. (Last updated: 2016-06-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

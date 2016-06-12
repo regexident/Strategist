@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Game Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/Game" class="dashAnchor"></a>
+    <a title="Game Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Strategist Docs</a> (53% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Strategist Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Game Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Evaluation.html">Evaluation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GameTree.html">GameTree</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Sd">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Sf">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Si">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int16">Int16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int32">Int32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5Int64">Int64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs4Int8">Int8</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Su">UInt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt16">UInt16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt32">UInt32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs6UInt64">UInt64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:Vs5UInt8">UInt8</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:F10Strategist19defaultRandomSourceFVs6UInt32S0_">defaultRandomSource(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:F10Strategist16fakeRandomSourceFVs6UInt32FS0_S0_">fakeRandomSource(_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Game.html">Game</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MonteCarloTreeSearchPolicy.html">MonteCarloTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P10Strategist4Move">Move</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P10Strategist6Player">Player</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ReversibleGame.html">ReversibleGame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Score.html">Score</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ScoringHeuristic.html">ScoringHeuristic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Strategy.html">Strategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TreeSearchPolicy.html">TreeSearchPolicy</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist17MiniMaxTreeSearch">MiniMaxTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist20MonteCarloTreeSearch">MonteCarloTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist17NegaMaxTreeSearch">NegaMaxTreeSearch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist14RandomStrategy">RandomStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist32SimpleMonteCarloTreeSearchPolicy">SimpleMonteCarloTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist22SimpleTreeSearchPolicy">SimpleTreeSearchPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Strategist29UpperConfidenceBoundHeuristic">UpperConfidenceBoundHeuristic</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Strategist12RandomSource">RandomSource</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Game</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Game</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+
+                </div>
+              </div>
+            <p>A representation of a game&rsquo;s state.</p>
+
+<div class="aside aside-requires">
+    <p class="aside-title">Requires</p>
+    Must be immutable &amp; have value semantics.
+
+</div>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Depending on the game&rsquo;s nature it may be appropriate to model
+the game&rsquo;s state as a history of moves, in addition to a simple snapshot.
+
+</div>
+
+<p><a href='#snapshot-only' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='snapshot-only'>Snapshot Only:</h4>
+<pre class="highlight plaintext"><code>enum ChessPlayer: Strategist.Player {
+    case White
+    case Black
+}
+enum ChessPiece {
+    case King, Queen, Rook, Bishop, Knight, Pawn
+}
+struct ChessGame: Strategist.State {
+    let board: [ChessPiece?]
+    let player: ChessPlayer?
+}
+</code></pre>
+<a href='#snapshot-history' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='snapshot-history'>Snapshot + History:</h4>
+<pre class="highlight plaintext"><code>enum GoPlayer: Strategist.Player {
+    case White
+    case Black
+}
+enum GoStone {
+    case White, Black
+}
+struct GoGame: Strategist.Game {
+    let board: [GoStone?]
+    let moves: [GoMove]
+    let player: GoPlayer?
+}
+</code></pre></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP10Strategist4Game13currentPlayerwx6Player"></a>
+                    <a name="//apple_ref/swift/Property/currentPlayer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP10Strategist4Game13currentPlayerwx6Player">currentPlayer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The player who the turn was handed over by last player&rsquo;s move
+or the game&rsquo;s initial player if no move has been made yet.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">currentPlayer</span><span class="p">:</span> <span class="kt">Player</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P10Strategist4Game4Move"></a>
+                    <a name="//apple_ref/swift/Alias/Move" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P10Strategist4Game4Move">Move</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A representation of a game&rsquo;s moves.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">as</span><span class="n">sociatedtype</span> <span class="kt">Move</span><span class="p">:</span> <span class="kt">Strategist</span><span class="o">.</span><span class="kt">Move</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P10Strategist4Game5Score"></a>
+                    <a name="//apple_ref/swift/Alias/Score" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P10Strategist4Game5Score">Score</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A representation of a game&rsquo;s evaluation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">as</span><span class="n">sociatedtype</span> <span class="kt">Score</span><span class="p">:</span> <span class="kt">Strategist</span><span class="o">.</span><span class="kt">Score</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P10Strategist4Game6Player"></a>
+                    <a name="//apple_ref/swift/Alias/Player" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P10Strategist4Game6Player">Player</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A representation of a game&rsquo;s state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">as</span><span class="n">sociatedtype</span> <span class="kt">Player</span><span class="p">:</span> <span class="kt">Strategist</span><span class="o">.</span><span class="kt">Player</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist4Game6updateFwx4Movex"></a>
+                    <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist4Game6updateFwx4Movex">update(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Advance the game by applying a move to the game&rsquo;s current state and advancing the players&rsquo; turn.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">move</span><span class="p">:</span> <span class="kt">Move</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An updated game at the newly calculated state.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist4Game16playersAreAlliedFTwx6PlayerwxS1__Sb"></a>
+                    <a name="//apple_ref/swift/Method/playersAreAllied(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist4Game16playersAreAlliedFTwx6PlayerwxS1__Sb">playersAreAllied(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks whether two players are expected to cooperate.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">playersAreAllied</span><span class="p">(</span><span class="nv">players</span><span class="p">:</span> <span class="p">(</span><span class="kt">Player</span><span class="p">,</span> <span class="kt">Player</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist4Game14availableMovesFT_GVs12AnyGeneratorwx4Move_"></a>
+                    <a name="//apple_ref/swift/Method/availableMoves()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist4Game14availableMovesFT_GVs12AnyGeneratorwx4Move_">availableMoves()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>All available moves for the next turn&rsquo;s player given the game&rsquo;s current state.</p>
+
+<ul>
+<li>recommended: Generate the moves lazily to reduce the memory overhead.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">availableMoves</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyGenerator</span><span class="o">&lt;</span><span class="kt">Move</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10Strategist4Game8evaluateFT9forPlayerwx6Player_GOS_10Evaluationwx5Score_"></a>
+                    <a name="//apple_ref/swift/Method/evaluate(forPlayer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10Strategist4Game8evaluateFT9forPlayerwx6Player_GOS_10Evaluationwx5Score_">evaluate(forPlayer:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Evaluate the game at its current state for the current player.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">forPlayer</span> <span class="nv">player</span><span class="p">:</span> <span class="kt">Player</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Evaluation</span><span class="o">&lt;</span><span class="kt">Score</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Evaluation of game&rsquo;s current state from the perspective of the game&rsquo;s current player.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE10StrategistPS_4Game8evaluateFT_GOS_10Evaluationwx5Score_"></a>
+                    <a name="//apple_ref/swift/Method/evaluate()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE10StrategistPS_4Game8evaluateFT_GOS_10Evaluationwx5Score_">evaluate()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Evaluate the game at its current state for the current player.
+had
+ - returns: Evaluation of game&rsquo;s current state from the perspective of the game&rsquo;s current player.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">evaluate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Evaluation</span><span class="o">&lt;</span><span class="kt">Score</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Evaluation of game&rsquo;s current state from the perspective of the game&rsquo;s current player.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vE10StrategistPS_4Game10isFinishedSb"></a>
+                    <a name="//apple_ref/swift/Property/isFinished" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vE10StrategistPS_4Game10isFinishedSb">isFinished</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks whether the game has reached a final state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isFinished</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>false</code> iff <code>self.evaluate()</code> would return <code>.Ongoing(_)</code>, otherwise <code>true</code>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/regexident/Strategist" target="_blank" rel="external">Vincent Esche</a>. All rights reserved. (Last updated: 2016-06-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
