@@ -54,7 +54,7 @@ public struct NegaMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> 
 extension NegaMaxTreeSearch: Strategy {
 
     public typealias Game = G
-
+    
     public func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<G.Score>)> {
         let player = game.currentPlayer
         let moves = game.availableMoves()
@@ -75,8 +75,6 @@ extension NegaMaxTreeSearch: Strategy {
         return self
     }
 }
-
-extension NegaMaxTreeSearch: DeterministicStrategy {}
 
 struct NegaMaxPayload<S: Score> {
     let alpha: Evaluation<S>

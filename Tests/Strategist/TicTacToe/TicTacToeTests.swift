@@ -28,7 +28,7 @@ class TicTacToeTests: XCTestCase {
                 XCTAssertTrue(evaluation.isDraw)
                 break
             }
-            if let move = strategy.bestMove(game) {
+            if let move = strategy.randomMaximizingMove(game) {
                 game = game.update(move)
             } else {
                 XCTFail()
@@ -52,7 +52,7 @@ class TicTacToeTests: XCTestCase {
                 XCTAssertTrue(evaluation.isDraw)
                 break
             }
-            if let move = strategy.bestMove(game) {
+            if let move = strategy.randomMaximizingMove(game) {
                 game = game.update(move)
             } else {
                 XCTFail()
@@ -65,7 +65,6 @@ class TicTacToeTests: XCTestCase {
         typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game>
         typealias Strategy = MonteCarloTreeSearch<Game, Policy>
         
-        let randomSource = arc4random_uniform
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
@@ -95,10 +94,15 @@ class TicTacToeTests: XCTestCase {
                 if i % 2 == 0 {
                     let epochs = 10
                     for _ in 0..<epochs {
-                        strategy = strategy.refine(randomSource)
+                        strategy = strategy.refine()
                     }
                 }
-                let move = (i % 2 == 0) ? strategy.bestMove(game, randomSource: randomSource)! : randomStrategy.bestMove(game)!
+                let move: TicTacToeMove
+                if (i % 2 == 0) {
+                    move = strategy.randomMaximizingMove(game)!
+                } else {
+                    move = randomStrategy.randomMaximizingMove(game)!
+                }
                 strategy = strategy.update(move)
                 game = game.update(move)
                 i += 1

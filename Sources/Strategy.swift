@@ -42,35 +42,25 @@ extension Strategy {
         }
         return bestMoves
     }
-}
 
-/// Protocol for deterministic strategies
-public protocol DeterministicStrategy: Strategy {}
-
-extension DeterministicStrategy {
     /// Greedily selects the first encountered maximizing
     /// available move for the `game`'s current state.
     ///
     /// - note: The selection is deterministic.
     ///
     /// - returns: First maximizing available move.
-    public func bestMove(game: Game) -> Game.Move? {
+    public func firstMaximizingMove(game: Game) -> Game.Move? {
         let evaluatedMoves = self.evaluatedMoves(game)
         return evaluatedMoves.maxElement{ $0.1 < $1.1 }.map{ $0.0 }
     }
-}
 
-/// Protocol for non-deterministic strategies
-public protocol NonDeterministicStrategy: Strategy {}
-
-extension NonDeterministicStrategy {
     /// Randomly selects from the encountered maximizing
     /// available move for the `game`'s current state.
     ///
     /// - note: The selection is deterministic.
     ///
     /// - returns: Randomly chosen maximizing available move.
-    public func bestMove(game: Game, randomSource: (UInt32 -> UInt32)? = nil) -> Game.Move? {
+    public func randomMaximizingMove(game: Game, randomSource: (UInt32 -> UInt32)? = nil) -> Game.Move? {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMove: Game.Move? = nil
         var count = 0

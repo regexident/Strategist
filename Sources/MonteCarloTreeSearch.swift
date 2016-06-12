@@ -49,7 +49,7 @@ public struct MonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPo
     }
 
     @warn_unused_result()
-    public func refine(randomSource: RandomSource) -> MonteCarloTreeSearch {
+    public func refine(randomSource: RandomSource = Strategist.defaultRandomSource) -> MonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
         }
@@ -359,8 +359,6 @@ extension MonteCarloTreeSearch: Strategy {
         })
     }
 }
-
-extension MonteCarloTreeSearch: NonDeterministicStrategy {}
 
 struct MonteCarloPayload<G: Game> {
     let game: G

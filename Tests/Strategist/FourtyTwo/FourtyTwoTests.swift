@@ -26,7 +26,7 @@ class FourtyTwoTests: XCTestCase {
                 XCTAssertTrue(evaluation.isVictory)
                 break
             }
-            let move = strategy.bestMove(game)!
+            let move = strategy.randomMaximizingMove(game)!
             game = game.update(move)
         }
     }
@@ -44,7 +44,7 @@ class FourtyTwoTests: XCTestCase {
                 XCTAssertTrue(evaluation.isVictory)
                 break
             }
-            let move = strategy.bestMove(game)!
+            let move = strategy.randomMaximizingMove(game)!
             game = game.update(move)
         }
     }
@@ -53,7 +53,6 @@ class FourtyTwoTests: XCTestCase {
         typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game>
         typealias Strategy = MonteCarloTreeSearch<Game, Policy>
 
-        let randomSource = arc4random_uniform
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
@@ -74,9 +73,9 @@ class FourtyTwoTests: XCTestCase {
                     return wins + (evaluation.isVictory ? 1 : 0)
                 }
                 for _ in 0..<20 {
-                    strategy = strategy.refine(randomSource)
+                    strategy = strategy.refine()
                 }
-                let move = strategy.bestMove(game, randomSource: randomSource)!
+                let move = strategy.randomMaximizingMove(game)!
                 game = game.update(move)
                 strategy = strategy.update(move)
             }

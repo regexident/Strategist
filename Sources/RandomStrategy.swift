@@ -9,7 +9,7 @@
 /// Implementation of a simple random-based strategy.
 public struct RandomStrategy<G: Game>: Strategy {
     public typealias Game = G
-
+    
     public init() {
 
     }
@@ -25,5 +25,3 @@ public struct RandomStrategy<G: Game>: Strategy {
         return self
     }
 }
-
-extension RandomStrategy: NonDeterministicStrategy {}

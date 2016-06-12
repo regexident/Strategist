@@ -42,7 +42,7 @@ extension CollectionType where Index == Int {
     ///
     /// - complexity: O(1).
     /// - returns: Randomly selected element from `self`.
-    func sample(randomSource: RandomSource) -> Generator.Element? {
+    func sample(randomSource: RandomSource = Strategist.defaultRandomSource) -> Generator.Element? {
         let count = self.count
         guard count > 0 else {
             return nil
@@ -57,7 +57,7 @@ extension GeneratorType {
     ///
     /// - complexity: O(`Array(self).count`).
     /// - returns: Randomly selected element from `self`.
-    mutating func sample(randomSource: RandomSource) -> Element? {
+    mutating func sample(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
         var result = self.next()
         for (index, element) in GeneratorSequence(self).enumerate() {
             if Int(randomSource(UInt32(index))) == 0 {
