@@ -263,6 +263,35 @@ extension MonteCarloTreeSearch: CustomDebugStringConvertible {
     }
 }
 
+extension MonteCarloTreeSearch: Strategy {
+    public typealias Game = G
+
+    public func evaluatedMoves(game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
+        assert(game == self.game)
+        assert(game.currentPlayer == self.player)
+        let player = game.currentPlayer
+        let (node, edges) = self.tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
+        let parentPlays = node.stats.plays
+        let moves = game.availableMoves()
+        let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
+        return AnySequence(filteredMoves.lazy.map { move in
+            if let subtree = edges[move] {
+                let nextGame = game.update(move)
+                let evaluation = nextGame.evaluate(forPlayer: player)
+                switch evaluation {
+                case .Ongoing(_):
+                    let score = self.policy.scoreMove(subtree.node.stats, parentPlays: parentPlays)
+                    return (move, Evaluation.Ongoing(score))
+                default:
+                    return (move, evaluation)
+                }
+            } else {
+                return (move, .Ongoing(Game.Score.mid))
+            }
+        })
+    }
+}
+
 public struct TreeStats {
     public var wins: Int
     public var plays: Int
@@ -310,35 +339,6 @@ struct TreeNode {
     init(stats: TreeStats, explorable: Bool) {
         self.stats = stats
         self.explorable = explorable
-    }
-}
-
-extension MonteCarloTreeSearch: Strategy {
-    public typealias Game = G
-
-    public func evaluatedMoves(game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
-        assert(game == self.game)
-        assert(game.currentPlayer == self.player)
-        let player = game.currentPlayer
-        let (node, edges) = self.tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
-        let parentPlays = node.stats.plays
-        let moves = game.availableMoves()
-        let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
-        return AnySequence(filteredMoves.lazy.map { move in
-            if let subtree = edges[move] {
-                let nextGame = game.update(move)
-                let evaluation = nextGame.evaluate(forPlayer: player)
-                switch evaluation {
-                case .Ongoing(_):
-                    let score = self.policy.scoreMove(subtree.node.stats, parentPlays: parentPlays)
-                    return (move, Evaluation.Ongoing(score))
-                default:
-                    return (move, evaluation)
-                }
-            } else {
-                return (move, .Ongoing(Game.Score.mid))
-            }
-        })
     }
 }
 

@@ -84,4 +84,41 @@ class FourtyTwoTests: XCTestCase {
         }
         XCTAssert(wins >= Int(Double(plays) * rate))
     }
+
+    func testParallelMonteCarloTreeSearch() {
+        typealias Heuristic = UpperConfidenceBoundHeuristic<Game>
+        typealias Policy = SimpleMonteCarloTreeSearchPolicy<Game, Heuristic>
+        typealias Strategy = ParallelMonteCarloTreeSearch<Game, Policy>
+
+        let threads = 8
+        let rate = 0.75
+        let plays = 10
+        let wins = (0..<plays).reduce(0) { wins, _ in
+            let player = Player()
+            var game = Game(player: player)
+            let heuristic = Heuristic(c: sqrt(2.0))
+            let policy = Policy(
+                maxMoves: 10,
+                maxExplorationDepth: 10,
+                maxSimulationDepth: 20,
+                simulations: 100,
+                pruningThreshold: 1000,
+                scoringHeuristic: heuristic
+            )
+            var strategy = Strategy(game: game, player: player, policy: policy, threads: threads)
+            while true {
+                let evaluation = game.evaluate()
+                guard !evaluation.isFinal else {
+                    return wins + (evaluation.isVictory ? 1 : 0)
+                }
+                for _ in 0..<20 {
+                    strategy = strategy.refine()
+                }
+                let move = strategy.randomMaximizingMove(game)!
+                game = game.update(move)
+                strategy = strategy.update(move)
+            }
+        }
+        XCTAssert(wins >= Int(Double(plays) * rate))
+    }
 }
