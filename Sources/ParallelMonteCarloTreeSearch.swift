@@ -11,7 +11,7 @@ import Foundation
 /// Implementation of [Monte Carlo Tree Search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) algorithm.
 ///
 /// - note: Due to internal state a separate instance of `MonteCarloTreeSearch` has to be used for for each player in a game.
-public struct ParallelMonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTreeSearchPolicy, P.Game == G, P.Score == G.Score> {
+public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.Game == G, P.Score == G.Score {
 
     typealias Base = MonteCarloTreeSearch<G, P>
 
@@ -45,15 +45,13 @@ public struct ParallelMonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTree
         self.threads = threads
     }
 
-    @warn_unused_result()
-    public func update(move: G.Move) -> ParallelMonteCarloTreeSearch {
+    public func update(_ move: G.Move) -> ParallelMonteCarloTreeSearch {
         let base = self.base.update(move)
         let threads = self.threads
         return ParallelMonteCarloTreeSearch(base: base, threads: threads)
     }
-
-    @warn_unused_result()
-    public func refine(randomSource: RandomSource = Strategist.defaultRandomSource) -> ParallelMonteCarloTreeSearch {
+    
+    public func refine(_ randomSource: @escaping RandomSource = Strategist.defaultRandomSource) -> ParallelMonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
         }
@@ -63,14 +61,12 @@ public struct ParallelMonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTree
             return ParallelMonteCarloTreeSearch(base: base, threads: threads)
         }
 
-        let asyncQueue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
-        let qos_attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_UTILITY, 0)
-        let syncQueue = dispatch_queue_create("com.domain.app.sync", qos_attr)
+        let syncQueue = DispatchQueue(label: "Strategist")
 
         var bases: [Base] = []
-        dispatch_apply(self.threads, asyncQueue) { i in
+        DispatchQueue.concurrentPerform(iterations: self.threads) { i in
             let base = self.base.refine(randomSource)
-            dispatch_sync(syncQueue) {
+            syncQueue.sync {
                 bases.append(base)
             }
         }
@@ -83,7 +79,7 @@ public struct ParallelMonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTree
         var count = bases.count
         bases.withUnsafeMutableBufferPointer { buffer in
             while bases.count > 1 {
-                dispatch_apply(count / 2, asyncQueue) { i in
+                DispatchQueue.concurrentPerform(iterations: count / 2) { i in
                     buffer[i] = buffer[i].mergeWith(buffer[i + (count / 2)])
                 }
             }
@@ -94,8 +90,7 @@ public struct ParallelMonteCarloTreeSearch<G, P where G: Game, P: MonteCarloTree
         return ParallelMonteCarloTreeSearch(base: base, threads: threads)
     }
 
-    @warn_unused_result()
-    public func mergeWith(other: ParallelMonteCarloTreeSearch) -> ParallelMonteCarloTreeSearch {
+    public func mergeWith(_ other: ParallelMonteCarloTreeSearch) -> ParallelMonteCarloTreeSearch {
         assert(self.base.game == other.base.game)
         assert(self.base.player == other.base.player)
         let base = self.base.mergeWith(other.base)
@@ -113,7 +108,7 @@ extension ParallelMonteCarloTreeSearch: CustomDebugStringConvertible {
 extension ParallelMonteCarloTreeSearch: Strategy {
     public typealias Game = G
 
-    public func evaluatedMoves(game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
+    public func evaluatedMoves(_ game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
         assert(game == self.game)
         assert(game.currentPlayer == self.player)
         return self.base.evaluatedMoves(game)

@@ -12,10 +12,10 @@ public protocol TreeSearchPolicy {
     associatedtype Game: Strategist.Game
 
     /// Filter out moves to be ignored at any stage of the game.
-    func filterMoves<G: GeneratorType where G.Element == Game.Move>(state: Game, depth: Int, moves: G) -> AnyGenerator<Game.Move>
+    func filterMoves<G: IteratorProtocol>(_ state: Game, depth: Int, moves: G) -> AnyIterator<Game.Move> where G.Element == Game.Move
 
     /// Whether the strategy should abort a given exploration.
-    func hasReachedMaxExplorationDepth(depth: Int) -> Bool
+    func hasReachedMaxExplorationDepth(_ depth: Int) -> Bool
 }
 
 /// Simple minimal implementation of `TreeSearchPolicy`.
@@ -30,11 +30,11 @@ public struct SimpleTreeSearchPolicy<G: Game>: TreeSearchPolicy {
         self.maxExplorationDepth = maxExplorationDepth
     }
 
-    public func filterMoves<G: GeneratorType where G.Element == Game.Move>(state: Game, depth: Int, moves: G) -> AnyGenerator<Game.Move> {
-        return AnyGenerator(moves.take(self.maxMoves))
+    public func filterMoves<G: IteratorProtocol>(_ state: Game, depth: Int, moves: G) -> AnyIterator<Game.Move> where G.Element == Game.Move {
+        return AnyIterator(moves.take(self.maxMoves))
     }
 
-    public func hasReachedMaxExplorationDepth(depth: Int) -> Bool {
+    public func hasReachedMaxExplorationDepth(_ depth: Int) -> Bool {
         return depth >= self.maxExplorationDepth
     }
 }

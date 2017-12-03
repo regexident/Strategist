@@ -17,7 +17,7 @@ class TicTacToeTests: XCTestCase {
         typealias Policy = SimpleTreeSearchPolicy<Game>
         typealias Strategy = MiniMaxTreeSearch<Game, Policy>
 
-        let players: [Player] = [.X, .O]
+        let players: [Player] = [.x, .o]
         var game = Game(players: players)
         let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
@@ -41,7 +41,7 @@ class TicTacToeTests: XCTestCase {
         typealias Policy = SimpleTreeSearchPolicy<Game>
         typealias Strategy = NegaMaxTreeSearch<Game, Policy>
 
-        let players: [Player] = [.X, .O]
+        let players: [Player] = [.x, .o]
         var game = Game(players: players)
         let policy = Policy(maxMoves: 10, maxExplorationDepth: 10)
         let strategy = Strategy(policy: policy)
@@ -69,7 +69,7 @@ class TicTacToeTests: XCTestCase {
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
-            let players: [Player] = [.X, .O]
+            let players: [Player] = [.x, .o]
             var game = Game(players: players)
             let heuristic = Heuristic(c: sqrt(2.0))
             let policy = Policy(
@@ -122,7 +122,7 @@ class TicTacToeTests: XCTestCase {
         let rate = 0.75
         let plays = 10
         let wins = (0..<plays).reduce(0) { wins, _ in
-            let players: [Player] = [.X, .O]
+            let players: [Player] = [.x, .o]
             var game = Game(players: players)
             let heuristic = Heuristic(c: sqrt(2.0))
             let policy = Policy(

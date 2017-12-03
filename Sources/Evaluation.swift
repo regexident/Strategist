@@ -9,20 +9,20 @@
 /// Game state evaluation
 public enum Evaluation<T: Score> {
     /// Evaluation of a victory with additional score value
-    case Victory(T)
+    case victory(T)
     /// Evaluation of a defeat with additional score value
-    case Defeat(T)
+    case defeat(T)
     /// Evaluation of a draw additional score value
-    case Draw(T)
+    case draw(T)
     /// Evaluation of an ongoing game with additional score value
-    case Ongoing(T)
+    case ongoing(T)
 
     /// Checks whether `self` is a not ongoing.
     ///
     /// - returns: `false` iff `self` is `.Ongoing(_)`, otherwise `true`
     public var isFinal: Bool {
         switch self {
-        case .Ongoing(_): return false
+        case .ongoing(_): return false
         default: return true
         }
     }
@@ -32,7 +32,7 @@ public enum Evaluation<T: Score> {
     /// - returns: `true` iff `self` is `.Victory(_)`, otherwise `false`
     public var isVictory: Bool {
         switch self {
-        case .Victory(_): return true
+        case .victory(_): return true
         default: return false
         }
     }
@@ -42,7 +42,7 @@ public enum Evaluation<T: Score> {
     /// - returns: `true` iff `self` is `.Defeat(_)`, otherwise `false`
     public var isDefeat: Bool {
         switch self {
-        case .Defeat(_): return true
+        case .defeat(_): return true
         default: return false
         }
     }
@@ -52,7 +52,7 @@ public enum Evaluation<T: Score> {
     /// - returns: `true` iff `self` is `.Draw(_)`, otherwise `false`
     public var isDraw: Bool {
         switch self {
-        case .Draw(_): return true
+        case .draw(_): return true
         default: return false
         }
     }
@@ -62,10 +62,10 @@ public enum Evaluation<T: Score> {
     /// - returns: `.Victory(-v)` iff `self` is `.Defeat(v)` and vice versa, otherwise `.Draw|Ongoing(-v)`
     public func inverse() -> Evaluation {
         switch self {
-        case let .Victory(value): return .Defeat(value.inverse())
-        case let .Defeat(value): return .Victory(value.inverse())
-        case let .Draw(value): return .Draw(value.inverse())
-        case let .Ongoing(value): return .Ongoing(value.inverse())
+        case let .victory(value): return .defeat(value.inverse())
+        case let .defeat(value): return .victory(value.inverse())
+        case let .draw(value): return .draw(value.inverse())
+        case let .ongoing(value): return .ongoing(value.inverse())
         }
     }
 
@@ -73,37 +73,37 @@ public enum Evaluation<T: Score> {
     /// 
     /// - returns: `.Defeat(-Double.infinity)`
     public static var min: Evaluation {
-        return .Defeat(T.min)
+        return .defeat(T.min)
     }
     /// The best possible evaluation
     ///
     /// - returns: `.Victory(Double.infinity)`
     public static var max: Evaluation {
-        return .Victory(T.max)
+        return .victory(T.max)
     }
 }
 
 extension Evaluation : Equatable {}
 
-public func ==<T: Score>(lhs: Evaluation<T>, rhs: Evaluation<T>) -> Bool {
+public func ==<T>(lhs: Evaluation<T>, rhs: Evaluation<T>) -> Bool {
     switch (lhs, rhs) {
-    case (.Victory, .Victory): return true
-    case (.Defeat, .Defeat): return true
-    case (.Draw, .Draw): return true
-    case let (.Ongoing(l), .Ongoing(r)): return l == r
+    case (.victory, .victory): return true
+    case (.defeat, .defeat): return true
+    case (.draw, .draw): return true
+    case let (.ongoing(l), .ongoing(r)): return l == r
     default: return false
     }
 }
 
 extension Evaluation : Comparable {}
 
-public func <<T: Score>(lhs: Evaluation<T>, rhs: Evaluation<T>) -> Bool {
+public func <<T>(lhs: Evaluation<T>, rhs: Evaluation<T>) -> Bool {
     switch (lhs, rhs) {
-    case let (.Defeat(l), .Defeat(r)): return l < r
-    case let (.Ongoing(l), .Ongoing(r)): return l < r
-    case let (.Victory(l), .Victory(r)): return l < r
-    case (.Defeat(_), _): return true
-    case (_, .Victory(_)): return true
+    case let (.defeat(l), .defeat(r)): return l < r
+    case let (.ongoing(l), .ongoing(r)): return l < r
+    case let (.victory(l), .victory(r)): return l < r
+    case (.defeat(_), _): return true
+    case (_, .victory(_)): return true
     default: return false
     }
 }

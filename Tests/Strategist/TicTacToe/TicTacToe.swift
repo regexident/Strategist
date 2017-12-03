@@ -9,15 +9,15 @@
 import Strategist
 
 enum TicTacToePlayer: Strategist.Player {
-    case X
-    case O
+    case x
+    case o
 }
 
 extension TicTacToePlayer: CustomStringConvertible {
     var description: String {
         switch self {
-        case .X: return "X"
-        case .O: return "O"
+        case .x: return "X"
+        case .o: return "O"
         }
     }
 }
@@ -25,28 +25,28 @@ extension TicTacToePlayer: CustomStringConvertible {
 extension TicTacToePlayer: CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
-        case .X: return "Max"
-        case .O: return "Min"
+        case .x: return "Max"
+        case .o: return "Min"
         }
     }
 }
 
 enum TicTacToeTile {
-    case Empty
-    case Occupied(TicTacToePlayer)
+    case empty
+    case occupied(TicTacToePlayer)
 
     var player: TicTacToePlayer? {
         switch self {
-        case .Empty: return nil
-        case let .Occupied(player): return player
+        case .empty: return nil
+        case let .occupied(player): return player
         }
     }
 
     init(player: TicTacToePlayer?) {
         if let player = player {
-            self = .Occupied(player)
+            self = .occupied(player)
         } else {
-            self = .Empty
+            self = .empty
         }
     }
 }
@@ -54,9 +54,9 @@ enum TicTacToeTile {
 extension TicTacToeTile: Hashable {
     var hashValue: Int {
         switch self {
-        case Empty:
+        case .empty:
             return 0
-        case Occupied(let player):
+        case .occupied(let player):
             return player.hashValue
         }
     }
@@ -66,8 +66,8 @@ extension TicTacToeTile: Equatable {}
 
 func ==(lhs: TicTacToeTile, rhs: TicTacToeTile) -> Bool {
     switch (lhs, rhs) {
-    case (.Empty, .Empty): return true
-    case let (.Occupied(playerLhs), .Occupied(playerRhs)): return playerLhs == playerRhs
+    case (.empty, .empty): return true
+    case let (.occupied(playerLhs), .occupied(playerRhs)): return playerLhs == playerRhs
     default: return false
     }
 }
@@ -75,8 +75,8 @@ func ==(lhs: TicTacToeTile, rhs: TicTacToeTile) -> Bool {
 extension TicTacToeTile: CustomStringConvertible {
     var description: String {
         switch self {
-        case .Empty: return " "
-        case let .Occupied(player): return "\(player)"
+        case .empty: return " "
+        case let .occupied(player): return "\(player)"
         }
     }
 }
@@ -123,12 +123,12 @@ struct TicTacToeGame: Strategist.Game {
     init(players: [TicTacToePlayer]) {
         assert(players.count == 2)
         assert(players[0] != players[1])
-        self.board = [TicTacToeTile](count: 9, repeatedValue: .Empty)
+        self.board = [TicTacToeTile](repeating: .empty, count: 9)
         self.players = players
         self.playerIndex = 0
     }
 
-    private init(board: [TicTacToeTile], players: [TicTacToePlayer], playerIndex: UInt8) {
+    fileprivate init(board: [TicTacToeTile], players: [TicTacToePlayer], playerIndex: UInt8) {
         assert(board.count == 9)
         assert(players.count == 2)
         assert(playerIndex < 2)
@@ -137,7 +137,7 @@ struct TicTacToeGame: Strategist.Game {
         self.playerIndex = playerIndex
     }
 
-    func update(move: Move) -> TicTacToeGame {
+    func update(_ move: Move) -> TicTacToeGame {
         var board = self.board
         board[move.index] = TicTacToeTile(player: move.player)
         let players = self.players
@@ -146,25 +146,25 @@ struct TicTacToeGame: Strategist.Game {
     }
 
     func isFinished() -> Bool {
-        return self.board.reduce(true) { $0 && $1 != .Empty }
+        return self.board.reduce(true) { $0 && $1 != .empty }
     }
 
-    func playerAfter(player: Player) -> Player {
-        guard let index = self.players.indexOf(player) else {
+    func playerAfter(_ player: Player) -> Player {
+        guard let index = self.players.index(of: player) else {
             fatalError("Unknown player: \(player)")
         }
         return self.players[(index + 1) % 2]
     }
 
-    func playersAreAllied(players: (Player, Player)) -> Bool {
+    func playersAreAllied(_ players: (Player, Player)) -> Bool {
         return players.0 == players.1
     }
 
-    func availableMoves() -> AnyGenerator<Move> {
-        let lazyMap = self.board.enumerate().lazy.flatMap { index, tile in
-            return (tile == .Empty) ? TicTacToeMove(index: index, player: self.currentPlayer) : nil
+    func availableMoves() -> AnyIterator<Move> {
+        let lazyMap = self.board.enumerated().lazy.flatMap { index, tile in
+            return (tile == .empty) ? TicTacToeMove(index: index, player: self.currentPlayer) : nil
         }
-        return AnyGenerator(lazyMap.generate())
+        return AnyIterator(lazyMap.makeIterator())
     }
 
     func evaluate(forPlayer player: Player) -> Evaluation<Score> {
@@ -184,16 +184,16 @@ struct TicTacToeGame: Strategist.Game {
                 occupied += 1
             }
             if playerOccupied == 3 {
-                return .Victory(0.0)
+                return .victory(0.0)
             } else if opponentOccupied == 3 {
-                return .Defeat(0.0)
+                return .defeat(0.0)
             }
             score += playerOccupied - opponentOccupied
         }
         if occupied == triples.count * 3 {
-            return .Draw(0.0)
+            return .draw(0.0)
         }
-        return .Ongoing(Double(score))
+        return .ongoing(Double(score))
     }
 
     static func triples() -> [(Int, Int, Int)] {
@@ -238,8 +238,8 @@ func ==(lhs: TicTacToeGame, rhs: TicTacToeGame) -> Bool {
 extension TicTacToeGame: CustomStringConvertible {
     var description: String {
         let board = [self.board[0...2], self.board[3...5], self.board[6...8]].map { row in
-            row.map { "\($0)" }.joinWithSeparator(" | ")
-            }.joinWithSeparator("\n")
+            row.map { "\($0)" }.joined(separator: " | ")
+            }.joined(separator: "\n")
         return "\(self.currentPlayer):\n\(board)"
     }
 }

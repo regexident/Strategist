@@ -9,14 +9,14 @@
 /// Implementation of [Minimax Tree Search](https://en.wikipedia.org/wiki/Minimax#Combinatorial_game_theory) algorithm with [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 ///
 /// - note: Due to the lack of internal state a single instance of `MiniMaxTreeSearch` can be shared for several players in a game.
-public struct MiniMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> {
+public struct MiniMaxTreeSearch<G, P: TreeSearchPolicy> where P.Game == G {
     let policy: P
 
     public init(policy: P) {
         self.policy = policy
     }
 
-    func minimax(game: Game, rootPlayer: G.Player, payload: MiniMaxPayload<G.Score>) -> Evaluation<G.Score> {
+    func minimax(_ game: Game, rootPlayer: G.Player, payload: MiniMaxPayload<G.Score>) -> Evaluation<G.Score> {
         let evaluation = game.evaluate(forPlayer: rootPlayer)
         guard !self.policy.hasReachedMaxExplorationDepth(payload.depth) && !evaluation.isFinal else {
             return evaluation
@@ -49,7 +49,7 @@ public struct MiniMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> 
 extension MiniMaxTreeSearch: Strategy {
     public typealias Game = G
 
-    public func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<G.Score>)> {
+    public func evaluatedMoves(_ game: Game) -> AnySequence<(Game.Move, Evaluation<G.Score>)> {
         let rootPlayer = game.currentPlayer
         let moves = game.availableMoves()
         let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
@@ -61,7 +61,7 @@ extension MiniMaxTreeSearch: Strategy {
         })
     }
 
-    public func update(move: Game.Move) -> MiniMaxTreeSearch {
+    public func update(_ move: Game.Move) -> MiniMaxTreeSearch {
         return self
     }
 }

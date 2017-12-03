@@ -21,15 +21,15 @@ extension FourtyTwoPlayer: CustomStringConvertible {
 }
 
 enum FourtyTwoMove: Strategist.Move {
-    case Add(Int)
-    case Mul(Int)
+    case add(Int)
+    case mul(Int)
 }
 
 func ==(lhs: FourtyTwoMove, rhs: FourtyTwoMove) -> Bool {
     switch (lhs, rhs) {
-    case let (.Add(lhsValue), .Add(rhsValue)):
+    case let (.add(lhsValue), .add(rhsValue)):
         return lhsValue == rhsValue
-    case let (.Mul(lhsValue), .Mul(rhsValue)):
+    case let (.mul(lhsValue), .mul(rhsValue)):
         return lhsValue == rhsValue
     default:
         return false
@@ -39,8 +39,8 @@ func ==(lhs: FourtyTwoMove, rhs: FourtyTwoMove) -> Bool {
 extension FourtyTwoMove: Hashable {
     var hashValue: Int {
         switch self {
-        case let .Add(value): return value
-        case let .Mul(value): return value
+        case let .add(value): return value
+        case let .mul(value): return value
         }
     }
 }
@@ -48,8 +48,8 @@ extension FourtyTwoMove: Hashable {
 extension FourtyTwoMove: CustomStringConvertible {
     var description: String {
         switch self {
-        case let .Add(value): return "+ \(value)"
-        case let .Mul(value): return "* \(value)"
+        case let .add(value): return "+ \(value)"
+        case let .mul(value): return "* \(value)"
         }
     }
 }
@@ -63,7 +63,7 @@ struct FourtyTwoGame: Strategist.Game {
     typealias Score = Double
 
     static let moves: [Move] = [
-        .Add(2), .Add(3), .Mul(2), .Mul(3)
+        .add(2), .add(3), .mul(2), .mul(3)
     ]
 
     let player: FourtyTwoPlayer
@@ -78,46 +78,46 @@ struct FourtyTwoGame: Strategist.Game {
         self.init(player: player, sum: 1, moves: [])
     }
 
-    private init(player: Player, sum: Int, moves: [Move]) {
+    fileprivate init(player: Player, sum: Int, moves: [Move]) {
         self.player = player
         self.sum = sum
         self.moves = moves
     }
 
-    func update(move: Move) -> FourtyTwoGame {
+    func update(_ move: Move) -> FourtyTwoGame {
         let player = self.player
         var sum = self.sum
         switch move {
-        case let .Add(value): sum += value
-        case let .Mul(value): sum *= value
+        case let .add(value): sum += value
+        case let .mul(value): sum *= value
         }
         var moves = self.moves
         moves.append(move)
         return FourtyTwoGame(player: player, sum: sum, moves: moves)
     }
 
-    func playerAfter(player: Player) -> Player {
+    func playerAfter(_ player: Player) -> Player {
         return player
     }
 
-    func playersAreAllied(players: (Player, Player)) -> Bool {
+    func playersAreAllied(_ players: (Player, Player)) -> Bool {
         return players.0 == players.1
     }
 
-    func availableMoves() -> AnyGenerator<Move> {
+    func availableMoves() -> AnyIterator<Move> {
         guard !self.isFinished else {
-            return AnyGenerator { return nil }
+            return AnyIterator { return nil }
         }
-        return AnyGenerator(FourtyTwoGame.moves.generate())
+        return AnyIterator(FourtyTwoGame.moves.makeIterator())
     }
 
     func evaluate(forPlayer player: Player) -> Evaluation<Score> {
         guard self.sum < 42 else {
             let score = Double(-self.moves.count)
-            return (self.sum == 42) ? .Victory(score) : .Defeat(score)
+            return (self.sum == 42) ? .victory(score) : .defeat(score)
         }
         let score = Double(abs(42 - self.sum))
-        return .Ongoing(score)
+        return .ongoing(score)
     }
 }
 

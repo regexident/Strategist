@@ -16,19 +16,19 @@ public protocol Strategy {
     /// Evaluates the available moves for the `game`'s current state.
     /// 
     /// - returns: Lazy sequence of evaluated moves.
-    func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<Game.Score>)>
+    func evaluatedMoves(_ game: Game) -> AnySequence<(Game.Move, Evaluation<Game.Score>)>
 
     /// Updates strategy's internal state for chosen `move`.
     /// 
     /// - returns: Updated strategy.
-    func update(move: Game.Move) -> Self
+    func update(_ move: Game.Move) -> Self
 }
 
 extension Strategy {
     /// Evaluates the available moves for the `game`'s current state.
     ///
     /// - returns: Lazy sequence of evaluated moves.
-    public func bestMoves(game: Game) -> [Game.Move] {
+    public func bestMoves(_ game: Game) -> [Game.Move] {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMoves: [Game.Move] = []
         for (move, evaluation) in self.evaluatedMoves(game) {
@@ -49,9 +49,9 @@ extension Strategy {
     /// - note: The selection is deterministic.
     ///
     /// - returns: First maximizing available move.
-    public func firstMaximizingMove(game: Game) -> Game.Move? {
+    public func firstMaximizingMove(_ game: Game) -> Game.Move? {
         let evaluatedMoves = self.evaluatedMoves(game)
-        return evaluatedMoves.maxElement{ $0.1 < $1.1 }.map{ $0.0 }
+        return evaluatedMoves.max{ $0.1 < $1.1 }.map{ $0.0 }
     }
 
     /// Randomly selects from the encountered maximizing
@@ -60,13 +60,13 @@ extension Strategy {
     /// - note: The selection is deterministic.
     ///
     /// - returns: Randomly chosen maximizing available move.
-    public func randomMaximizingMove(game: Game, randomSource: (UInt32 -> UInt32)? = nil) -> Game.Move? {
+    public func randomMaximizingMove(_ game: Game, randomSource: ((UInt32) -> UInt32)? = nil) -> Game.Move? {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMove: Game.Move? = nil
         var count = 0
         let evaluatedMoves = self.evaluatedMoves(game)
         guard let randomSource = randomSource else {
-            return evaluatedMoves.maxElement{ $0.1 < $1.1 }.map { $0.0 }
+            return evaluatedMoves.max{ $0.1 < $1.1 }.map { $0.0 }
         }
         for (move, evaluation) in evaluatedMoves {
             if evaluation > bestEvaluation {

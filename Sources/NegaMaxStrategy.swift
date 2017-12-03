@@ -9,14 +9,14 @@
 /// Implementation of [Negamax Tree Search](https://en.wikipedia.org/wiki/Negamax#Negamax_with_alpha_beta_pruning) algorithm with [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 ///
 /// - note: Due to the lack of internal state a single instance of `NegaMaxTreeSearch` can be shared for several players in a game.
-public struct NegaMaxTreeSearch<G: Game, P: TreeSearchPolicy where P.Game == G> {
+public struct NegaMaxTreeSearch<G, P: TreeSearchPolicy> where P.Game == G {
     let policy: P
 
     public init(policy: P) {
         self.policy = policy
     }
 
-    func negamax(game: Game, rootPlayer: G.Player, payload: NegaMaxPayload<G.Score>) -> Evaluation<G.Score> {
+    func negamax(_ game: Game, rootPlayer: G.Player, payload: NegaMaxPayload<G.Score>) -> Evaluation<G.Score> {
         let evaluation = game.evaluate()
         guard !self.policy.hasReachedMaxExplorationDepth(payload.depth) && !evaluation.isFinal else {
             return evaluation
@@ -58,7 +58,7 @@ extension NegaMaxTreeSearch: Strategy {
 
     public typealias Game = G
     
-    public func evaluatedMoves(game: Game) -> AnySequence<(Game.Move, Evaluation<G.Score>)> {
+    public func evaluatedMoves(_ game: Game) -> AnySequence<(Game.Move, Evaluation<G.Score>)> {
         let player = game.currentPlayer
         let moves = game.availableMoves()
         let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
@@ -74,7 +74,7 @@ extension NegaMaxTreeSearch: Strategy {
         })
     }
 
-    public func update(move: Game.Move) -> NegaMaxTreeSearch {
+    public func update(_ move: Game.Move) -> NegaMaxTreeSearch {
         return self
     }
 }

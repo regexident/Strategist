@@ -6,15 +6,15 @@
 //  Copyright © 2016 Vincent Esche. All rights reserved.
 //
 
-extension GeneratorType {
+extension IteratorProtocol {
     /// Take first `0..<upperBound` elements of `self`.
-    func take(upperBound: Int) -> Take<Self> {
+    func take(_ upperBound: Int) -> Take<Self> {
         return Take(base: self, upperBound: upperBound)
     }
 }
 
 /// Take first `0..<upperBound` elements of `self`.
-struct Take<G: GeneratorType>: GeneratorType {
+struct Take<G: IteratorProtocol>: IteratorProtocol {
     typealias Base = G
     typealias Element = Base.Element
 
@@ -35,12 +35,12 @@ struct Take<G: GeneratorType>: GeneratorType {
     }
 }
 
-extension CollectionType where Index == Int {
+extension Collection where Index == Int, IndexDistance == Int {
     /// Select random element from `self`.
     ///
     /// - complexity: O(1).
     /// - returns: Randomly selected element from `self`.
-    func sample(randomSource: RandomSource = Strategist.defaultRandomSource) -> Generator.Element? {
+    func sample(_ randomSource: RandomSource = Strategist.defaultRandomSource) -> Iterator.Element? {
         let count = self.count
         guard count > 0 else {
             return nil
@@ -50,12 +50,12 @@ extension CollectionType where Index == Int {
     }
 }
 
-extension GeneratorType {
+extension IteratorProtocol {
     /// Select random element from `self`.
     ///
     /// - complexity: O(`Array(self).count`).
     /// - returns: Randomly selected element from `self`.
-    mutating func sample(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
+    mutating func sample(_ randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
         var result = self.next()
         var count = 2
         while let element = self.next() {
@@ -68,21 +68,21 @@ extension GeneratorType {
     }
 }
 
-extension GeneratorType where Element : Comparable {
+extension IteratorProtocol where Element : Comparable {
     //Returns a random sample from maximum elements in self or nil if the sequence is empty.
     //
     /// -complexity: O(elements.count).
     mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
-        return self.sampleMaxElement(randomSource) { $0 < $1 }
+        return self.sampleMaxElement(randomSource: randomSource) { $0 < $1 }
     }
 }
 
-extension GeneratorType {
+extension IteratorProtocol {
     /// Returns a random sample from maximum elements in self or nil if the sequence is empty.
     ///
     /// - complexity: O(elements.count).
     /// - requires: `isOrderedBefore` is a strict weak ordering over `self`.
-    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource, @noescape isOrderedBefore: (Element, Element) throws -> Bool) rethrows -> Element? {
+    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource, isOrderedBefore: (Element, Element) throws -> Bool) rethrows -> Element? {
         guard var maxElement = self.next() else {
             return nil
         }

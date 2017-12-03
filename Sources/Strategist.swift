@@ -9,10 +9,10 @@
 import Darwin
 
 /// Function type used for injecting random sources into Strategist.
-public typealias RandomSource = UInt32 -> UInt32
+public typealias RandomSource = (UInt32) -> UInt32
 
 /// Convenience function for generating curried fake random sources.
-public func fakeRandomSource(output: UInt32) -> RandomSource {
+public func fakeRandomSource(_ output: UInt32) -> RandomSource {
     return { upperBound in
         assert(output < upperBound)
         return output
@@ -20,7 +20,7 @@ public func fakeRandomSource(output: UInt32) -> RandomSource {
 }
 
 /// The default random source to use unless provided explicitly.
-public func defaultRandomSource(upperBound: UInt32) -> UInt32 {
+public func defaultRandomSource(_ upperBound: UInt32) -> UInt32 {
     return arc4random_uniform(upperBound)
 }
 
@@ -101,15 +101,15 @@ public protocol Game: Equatable {
     /// Advance the game by applying a move to the game's current state and advancing the players' turn.
     ///
     /// - returns: An updated game at the newly calculated state.
-    func update(move: Move) -> Self
+    func update(_ move: Move) -> Self
 
     /// Checks whether two players are expected to cooperate.
-    func playersAreAllied(players: (Player, Player)) -> Bool
+    func playersAreAllied(_ players: (Player, Player)) -> Bool
 
     /// All available moves for the next turn's player given the game's current state.
     ///
     /// - recommended: Generate the moves lazily to reduce the memory overhead.
-    func availableMoves() -> AnyGenerator<Move>
+    func availableMoves() -> AnyIterator<Move>
 
     /// Evaluate the game at its current state for the current player.
     ///
@@ -130,7 +130,7 @@ extension Game {
     /// - returns: `false` iff `self.evaluate()` would return `.Ongoing(_)`, otherwise `true`.
     public var isFinished: Bool {
         switch self.evaluate() {
-        case .Ongoing(_): return false
+        case .ongoing(_): return false
         default: return true
         }
     }
@@ -143,5 +143,5 @@ public protocol ReversibleGame: Game {
     /// Rewind the game by undoing a move to the game's current state.
     ///
     /// - returns: An updated game at the newly calculated prior state.
-    func reverse(move: Move) -> Self
+    func reverse(_ move: Move) -> Self
 }
