@@ -35,7 +35,7 @@ struct Take<G: IteratorProtocol>: IteratorProtocol {
     }
 }
 
-extension Collection where Index == Int, IndexDistance == Int {
+extension Collection where Index == Int {
     /// Select random element from `self`.
     ///
     /// - complexity: O(1).
