@@ -161,7 +161,7 @@ struct TicTacToeGame: Strategist.Game {
     }
 
     func availableMoves() -> AnyIterator<Move> {
-        let lazyMap = self.board.enumerated().lazy.flatMap { index, tile in
+        let lazyMap = self.board.enumerated().lazy.compactMap { index, tile in
             return (tile == .empty) ? TicTacToeMove(index: index, player: self.currentPlayer) : nil
         }
         return AnyIterator(lazyMap.makeIterator())
@@ -172,7 +172,7 @@ struct TicTacToeGame: Strategist.Game {
         var occupied = 0
         let triples = TicTacToeGame.triples()
         for (a, b, c) in triples {
-            let occupants = [self.board[a], self.board[b], self.board[c]].flatMap { $0.player }
+            let occupants = [self.board[a], self.board[b], self.board[c]].compactMap { $0.player }
             var playerOccupied = 0
             var opponentOccupied = 0
             for occupant in occupants {
