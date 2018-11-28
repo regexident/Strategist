@@ -22,16 +22,16 @@ public protocol Score: Comparable {
 }
 
 extension Double: Score {
-    public static var min: Double { return -infinity }
+    public static var min: Double { return -.infinity }
     public static var mid: Double { return 0.0 }
-    public static var max: Double { return infinity }
+    public static var max: Double { return .infinity }
     public func inverse() -> Double { return -self }
 }
 
 extension Float: Score {
-    public static var min: Float { return -infinity }
+    public static var min: Float { return -.infinity }
     public static var mid: Float { return 0.0 }
-    public static var max: Float { return infinity }
+    public static var max: Float { return .infinity }
     public func inverse() -> Float { return -self }
 }
 
@@ -41,8 +41,8 @@ extension Int: Score {
 }
 
 extension UInt: Score {
-    public static var mid: UInt { return UInt.max / 2 }
-    public func inverse() -> UInt { return UInt.max - self }
+    public static var mid: UInt { return .max / 2 }
+    public func inverse() -> UInt { return .max - self }
 }
 
 extension Int64: Score {
@@ -51,8 +51,8 @@ extension Int64: Score {
 }
 
 extension UInt64: Score {
-    public static var mid: UInt64 { return UInt64.max / 2 }
-    public func inverse() -> UInt64 { return UInt64.max - self }
+    public static var mid: UInt64 { return .max / 2 }
+    public func inverse() -> UInt64 { return .max - self }
 }
 
 extension Int32: Score {
@@ -61,8 +61,8 @@ extension Int32: Score {
 }
 
 extension UInt32: Score {
-    public static var mid: UInt32 { return UInt32.max / 2 }
-    public func inverse() -> UInt32 { return UInt32.max - self }
+    public static var mid: UInt32 { return .max / 2 }
+    public func inverse() -> UInt32 { return .max - self }
 }
 
 extension Int16: Score {
@@ -71,8 +71,8 @@ extension Int16: Score {
 }
 
 extension UInt16: Score {
-    public static var mid: UInt16 { return UInt16.max / 2 }
-    public func inverse() -> UInt16 { return UInt16.max - self }
+    public static var mid: UInt16 { return .max / 2 }
+    public func inverse() -> UInt16 { return .max - self }
 }
 
 extension Int8: Score {
@@ -81,6 +81,6 @@ extension Int8: Score {
 }
 
 extension UInt8: Score {
-    public static var mid: UInt8 { return UInt8.max / 2 }
-    public func inverse() -> UInt8 { return UInt8.max - self }
+    public static var mid: UInt8 { return .max / 2 }
+    public func inverse() -> UInt8 { return .max - self }
 }
