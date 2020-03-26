@@ -8,7 +8,7 @@
 
 import Strategist
 
-enum TicTacToePlayer: Strategist.Player {
+enum TicTacToePlayer: Strategist.Player, Hashable {
     case x
     case o
 }
@@ -31,7 +31,7 @@ extension TicTacToePlayer: CustomDebugStringConvertible {
     }
 }
 
-enum TicTacToeTile {
+enum TicTacToeTile: Hashable {
     case empty
     case occupied(TicTacToePlayer)
 
@@ -51,27 +51,6 @@ enum TicTacToeTile {
     }
 }
 
-extension TicTacToeTile: Hashable {
-    var hashValue: Int {
-        switch self {
-        case .empty:
-            return 0
-        case .occupied(let player):
-            return player.hashValue
-        }
-    }
-}
-
-extension TicTacToeTile: Equatable {}
-
-func ==(lhs: TicTacToeTile, rhs: TicTacToeTile) -> Bool {
-    switch (lhs, rhs) {
-    case (.empty, .empty): return true
-    case let (.occupied(playerLhs), .occupied(playerRhs)): return playerLhs == playerRhs
-    default: return false
-    }
-}
-
 extension TicTacToeTile: CustomStringConvertible {
     var description: String {
         switch self {
@@ -81,9 +60,15 @@ extension TicTacToeTile: CustomStringConvertible {
     }
 }
 
-struct TicTacToeMove: Strategist.Move {
+struct TicTacToeMove: Strategist.Move, Hashable {
     let index: Int
     let player: TicTacToePlayer
+}
+
+extension TicTacToeMove: Equatable {
+    static func ==(lhs: TicTacToeMove, rhs: TicTacToeMove) -> Bool {
+        return (lhs.index == rhs.index)
+    }
 }
 
 extension TicTacToeMove: CustomStringConvertible {
@@ -92,22 +77,10 @@ extension TicTacToeMove: CustomStringConvertible {
     }
 }
 
-extension TicTacToeMove: Hashable {
-    var hashValue: Int {
-        return index
-    }
-}
-
-extension TicTacToeMove: Equatable {}
-
-func ==(lhs: TicTacToeMove, rhs: TicTacToeMove) -> Bool {
-    return (lhs.index == rhs.index)
-}
-
 /// The objective of this game is to be the first to make three marks
 /// in a horizontal, vertical, or diagonal row by placing marks on a 3x3 grid
 /// alternating between the two playing players turn by turn.
-struct TicTacToeGame: Strategist.Game {
+struct TicTacToeGame: Strategist.Game, Equatable, Hashable {
     typealias Player = TicTacToePlayer
     typealias Move = TicTacToeMove
     typealias Score = Double
@@ -150,7 +123,7 @@ struct TicTacToeGame: Strategist.Game {
     }
 
     func playerAfter(_ player: Player) -> Player {
-        guard let index = self.players.index(of: player) else {
+        guard let index = self.players.firstIndex(of: player) else {
             fatalError("Unknown player: \(player)")
         }
         return self.players[(index + 1) % 2]
@@ -212,28 +185,6 @@ struct TicTacToeGame: Strategist.Game {
         return Holder.triplesArray
     }
 }
-
-func ==(lhs: TicTacToeGame, rhs: TicTacToeGame) -> Bool {
-    guard lhs.board == rhs.board else {
-        return false
-    }
-    guard lhs.players == rhs.players else {
-        return false
-    }
-    guard lhs.playerIndex == rhs.playerIndex else {
-        return false
-    }
-    return true
-}
-
-//extension TicTacToeGame: Hashable {
-//    var hashValue: Int {
-//        return self.board.enumerate().reduce(0) { hash, tuple in
-//            let (index, tile) = tuple
-//            return hash ^ index ^ tile.hashValue
-//        }
-//    }
-//}
 
 extension TicTacToeGame: CustomStringConvertible {
     var description: String {

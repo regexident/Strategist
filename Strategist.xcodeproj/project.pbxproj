@@ -233,11 +233,11 @@
 				TargetAttributes = {
 					"______Target_Strategist" = {
 						DevelopmentTeam = RHSV5Y8MLD;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1140;
 					};
 					"______Target_StrategistTestSuite" = {
 						DevelopmentTeam = RHSV5Y8MLD;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -246,6 +246,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = "___RootGroup_";
@@ -316,6 +317,7 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -330,6 +332,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -348,6 +351,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -363,6 +367,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};

@@ -38,7 +38,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         let tree = self.tree.analysis(leaf: { node in
             return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)
         }, branch: { node, edges in
-            if let index = edges.index(where: { $0.0 == move }) {
+            if let index = edges.firstIndex(where: { $0.0 == move }) {
                 return edges[index].1
             } else {
                 return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)

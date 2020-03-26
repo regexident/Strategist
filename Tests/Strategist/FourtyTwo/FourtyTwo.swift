@@ -8,11 +8,7 @@
 
 import Strategist
 
-struct FourtyTwoPlayer: Strategist.Player {}
-
-func ==(lhs: FourtyTwoPlayer, rhs: FourtyTwoPlayer) -> Bool {
-    return true
-}
+struct FourtyTwoPlayer: Strategist.Player, Equatable, Hashable {}
 
 extension FourtyTwoPlayer: CustomStringConvertible {
     var description: String {
@@ -20,29 +16,9 @@ extension FourtyTwoPlayer: CustomStringConvertible {
     }
 }
 
-enum FourtyTwoMove: Strategist.Move {
+enum FourtyTwoMove: Strategist.Move, Equatable, Hashable {
     case add(Int)
     case mul(Int)
-}
-
-func ==(lhs: FourtyTwoMove, rhs: FourtyTwoMove) -> Bool {
-    switch (lhs, rhs) {
-    case let (.add(lhsValue), .add(rhsValue)):
-        return lhsValue == rhsValue
-    case let (.mul(lhsValue), .mul(rhsValue)):
-        return lhsValue == rhsValue
-    default:
-        return false
-    }
-}
-
-extension FourtyTwoMove: Hashable {
-    var hashValue: Int {
-        switch self {
-        case let .add(value): return value
-        case let .mul(value): return value
-        }
-    }
 }
 
 extension FourtyTwoMove: CustomStringConvertible {
@@ -57,7 +33,7 @@ extension FourtyTwoMove: CustomStringConvertible {
 /// The objective of this ficticious single-player dummy game
 /// is to reach exactly 42 with the least amount of moves by either
 /// adding or multiplying the current total with either 2 or 3.
-struct FourtyTwoGame: Strategist.Game {
+struct FourtyTwoGame: Strategist.Game, Equatable, Hashable {
     typealias Player = FourtyTwoPlayer
     typealias Move = FourtyTwoMove
     typealias Score = Double
@@ -119,19 +95,6 @@ struct FourtyTwoGame: Strategist.Game {
         let score = Double(abs(42 - self.sum))
         return .ongoing(score)
     }
-}
-
-func ==(lhs: FourtyTwoGame, rhs: FourtyTwoGame) -> Bool {
-    guard lhs.player == rhs.player else {
-        return false
-    }
-    guard lhs.sum == rhs.sum else {
-        return false
-    }
-    guard lhs.moves == rhs.moves else {
-        return false
-    }
-    return true
 }
 
 extension FourtyTwoGame: CustomStringConvertible {
