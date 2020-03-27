@@ -47,7 +47,9 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
     }
 
-    public func refine(_ randomSource: @escaping RandomSource = Strategist.defaultRandomSource) -> MonteCarloTreeSearch {
+    public func refine(
+        _ randomSource: @escaping RandomSource = Int.random(in:)
+    ) -> MonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
         }

@@ -56,8 +56,10 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
             batchSize: self.batchSize
         )
     }
-    
-    public func refine(_ randomSource: @escaping RandomSource = Strategist.defaultRandomSource) -> ParallelMonteCarloTreeSearch {
+
+    public func refine(
+        _ randomSource: @escaping RandomSource = Int.random(in:)
+    ) -> ParallelMonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
         }

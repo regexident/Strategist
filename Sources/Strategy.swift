@@ -60,7 +60,10 @@ extension Strategy {
     /// - note: The selection is deterministic.
     ///
     /// - returns: Randomly chosen maximizing available move.
-    public func randomMaximizingMove(_ game: Game, randomSource: ((UInt32) -> UInt32)? = nil) -> Game.Move? {
+    public func randomMaximizingMove(
+        _ game: Game,
+        randomSource: RandomSource? = Int.random(in:)
+    ) -> Game.Move? {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMove: Game.Move? = nil
         var count = 0
@@ -74,7 +77,7 @@ extension Strategy {
                 bestMove = move
                 count = 1
             } else if evaluation == bestEvaluation {
-                if Int(randomSource(UInt32(count))) == 0 {
+                if randomSource(0..<count) == 0 {
                     bestMove = move
                 }
                 count += 1
