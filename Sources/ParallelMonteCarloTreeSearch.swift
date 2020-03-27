@@ -15,7 +15,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
 
     typealias Base = MonteCarloTreeSearch<G, P>
 
-    let base: Base
+    var base: Base
     let parallelCount: Int
     let batchSize: Int
 
@@ -49,12 +49,8 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
         self.batchSize = batchSize
     }
 
-    public func update(_ move: G.Move) -> ParallelMonteCarloTreeSearch {
-        return ParallelMonteCarloTreeSearch(
-            base: self.base.update(move),
-            parallelCount: self.parallelCount,
-            batchSize: self.batchSize
-        )
+    public mutating func update(_ move: G.Move) {
+        self.base.update(move)
     }
 
     public func refine(
@@ -69,33 +65,28 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
 
         let batchCount = (count + batchSize - 1) / batchSize
 
-        guard count > batchSize else {
-            var refinedBase: Base = self.base
-            for _ in 0..<batchSize {
-                let lhs = refinedBase
-                let rhs = refinedBase.refine(using: randomSource)
-                refinedBase = lhs.mergeWith(rhs)
-            }
-            return ParallelMonteCarloTreeSearch(
-                base: refinedBase,
-                parallelCount: self.parallelCount,
-                batchSize: self.batchSize
-            )
-        }
-
         var bases: [Base] = Array(unsafeUninitializedCapacity: count) { buffer, initializedCount in
             initializedCount = count
 
             let bufferStartIndex = buffer.baseAddress!
             let bufferEndIndex = bufferStartIndex + buffer.count
 
-            DispatchQueue.concurrentPerform(iterations: batchCount) { batchIndex in
+            let refineBatch: (Int) -> () = { batchIndex in
                 let batchStartIndex = bufferStartIndex + (batchIndex * batchSize)
                 let batchEndIndex = min(bufferEndIndex, batchStartIndex + batchSize)
                 for pointer in batchStartIndex..<batchEndIndex {
-                    let refinedBase = self.base.refine(using: randomSource)
+                    let refinedBase = self.base.refined(using: randomSource)
                     pointer.initialize(to: refinedBase)
                 }
+            }
+
+            guard batchCount > 1 else {
+                refineBatch(0)
+                return
+            }
+
+            DispatchQueue.concurrentPerform(iterations: batchCount) { batchIndex in
+                refineBatch(batchIndex)
             }
         }
 

@@ -115,7 +115,7 @@ class TicTacToeTests: XCTestCase {
                 } else {
                     move = randomStrategy.randomMaximizingMove(game, using: randomSource)!
                 }
-                strategy = strategy.update(move)
+                strategy.update(move)
                 game = game.update(move)
             }
         }
@@ -168,7 +168,7 @@ class TicTacToeTests: XCTestCase {
                     return
                 }
                 if i % 2 == 0 {
-                    strategy = strategy.refine()
+                    strategy.refine()
                 }
                 let move: TicTacToeMove
                 if (i % 2 == 0) {
@@ -176,7 +176,7 @@ class TicTacToeTests: XCTestCase {
                 } else {
                     move = randomStrategy.randomMaximizingMove(game, using: randomSource)!
                 }
-                strategy = strategy.update(move)
+                strategy.update(move)
                 game = game.update(move)
             }
         }

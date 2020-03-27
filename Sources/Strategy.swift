@@ -21,7 +21,17 @@ public protocol Strategy {
     /// Updates strategy's internal state for chosen `move`.
     /// 
     /// - returns: Updated strategy.
-    func update(_ move: Game.Move) -> Self
+    mutating func update(_ move: Game.Move)
+
+    func updated(_ move: Game.Move) -> Self
+}
+
+extension Strategy {
+    public func updated(_ move: Game.Move) -> Self {
+        var copy = self
+        copy.update(move)
+        return copy
+    }
 }
 
 extension Strategy {

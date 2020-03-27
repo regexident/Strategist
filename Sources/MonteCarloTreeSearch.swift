@@ -13,7 +13,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
 
     typealias Tree = Strategist.GameTree<TreeNode, G.Move>
 
-    public let game: G
+    public var game: G
     public let player: G.Player
     public let policy: P
 
@@ -30,12 +30,10 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         self.policy = policy
         self.tree = tree
     }
-    
-    public func update(_ move: G.Move) -> MonteCarloTreeSearch {
-        let game = self.game.update(move)
-        let player = self.player
-        let policy = self.policy
-        let tree = self.tree.analysis(leaf: { node in
+
+    public mutating func update(_ move: G.Move) {
+        self.game = self.game.update(move)
+        self.tree = self.tree.analysis(leaf: { node in
             return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)
         }, branch: { node, edges in
             if let index = edges.firstIndex(where: { $0.0 == move }) {
@@ -44,12 +42,11 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
                 return MonteCarloTreeSearch.initialTreeForGame(self.game, policy: self.policy)
             }
         })
-        return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
     }
 
     public func refined(
         using randomSource: @escaping RandomSource = Int.random(in:)
-    ) -> MonteCarloTreeSearch {
+    ) -> Self {
         var copy = self
         copy.refine(using: randomSource)
         return copy
@@ -65,7 +62,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         self.tree = self.refineSubtree(self.tree, payload: payload)
     }
 
-    public func mergeWith(_ other: MonteCarloTreeSearch) -> MonteCarloTreeSearch {
+    public func mergeWith(_ other: MonteCarloTreeSearch) -> Self {
         assert(self.game == other.game)
         assert(self.player == other.player)
         let game = self.game

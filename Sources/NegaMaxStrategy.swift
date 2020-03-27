@@ -74,8 +74,8 @@ extension NegaMaxTreeSearch: Strategy {
         })
     }
 
-    public func update(_ move: Game.Move) -> NegaMaxTreeSearch {
-        return self
+    public mutating func update(_ move: Game.Move) {
+        // does nothing
     }
 }
 

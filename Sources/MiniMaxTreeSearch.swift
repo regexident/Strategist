@@ -61,8 +61,8 @@ extension MiniMaxTreeSearch: Strategy {
         })
     }
 
-    public func update(_ move: Game.Move) -> MiniMaxTreeSearch {
-        return self
+    public func update(_ move: Game.Move) {
+        // does nothing
     }
 }
 

@@ -94,7 +94,7 @@ class FourtyTwoTests: XCTestCase {
 
                 let move = strategy.randomMaximizingMove(game, using: randomSource)!
                 game = game.update(move)
-                strategy = strategy.update(move)
+                strategy.update(move)
             }
         }
     }
@@ -140,10 +140,12 @@ class FourtyTwoTests: XCTestCase {
                     XCTAssert(evaluation.isVictory, "Expected to win")
                     return
                 }
-                strategy = strategy.refine(using: randomSource)
+
+                strategy.refine(using: randomSource)
+
                 let move = strategy.randomMaximizingMove(game, using: randomSource)!
                 game = game.update(move)
-                strategy = strategy.update(move)
+                strategy.update(move)
             }
         }
     }
