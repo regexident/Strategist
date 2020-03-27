@@ -152,16 +152,18 @@ extension ParallelMonteCarloTreeSearch {
             return
         }
 
-        if count % 2 != 0 {
-            let (lhs, rhs) = (
-                bufferSliceStartIndex + ((count - 2) * stride),
-                bufferSliceStartIndex + ((count - 1) * stride)
+        func merge(_ src: Int, into dst: Int, stride: Int) {
+            let (srcIndex, dstIndex) = (
+                bufferSliceStartIndex + (src * stride),
+                bufferSliceStartIndex + (dst * stride)
             )
-            assert(bufferSliceIndices.contains(lhs))
-            assert(bufferSliceIndices.contains(rhs))
-            let lhsBase = bufferSlice[lhs]
-            let rhsBase = bufferSlice[rhs]
-            bufferSlice[lhs] = lhsBase.mergedWith(rhsBase)
+            assert(bufferSliceIndices.contains(srcIndex))
+            assert(bufferSliceIndices.contains(dstIndex))
+            bufferSlice[dstIndex].mergeWith(bufferSlice[srcIndex])
+        }
+
+        if count % 2 != 0 {
+            merge((count - 1), into: (count - 2), stride: stride)
             count -= 1
         }
 
@@ -170,15 +172,7 @@ extension ParallelMonteCarloTreeSearch {
         while count > 1 {
             let halfCount = count / 2
             for index in 0..<halfCount {
-                let (lhs, rhs) = (
-                    bufferSliceStartIndex + (index * stride),
-                    bufferSliceStartIndex + ((index + halfCount) * stride)
-                )
-                assert(bufferSliceIndices.contains(lhs))
-                assert(bufferSliceIndices.contains(rhs))
-                let lhsBase = bufferSlice[lhs]
-                let rhsBase = bufferSlice[rhs]
-                bufferSlice[lhs] = lhsBase.mergedWith(rhsBase)
+                merge(index + halfCount,into: index, stride: stride)
             }
             count = halfCount
         }
