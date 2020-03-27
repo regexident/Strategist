@@ -107,7 +107,7 @@ class TicTacToeTests: XCTestCase {
                     return
                 }
                 if i % 2 == 0 {
-                    strategy = strategy.refine()
+                    strategy.refine()
                 }
                 let move: TicTacToeMove
                 if (i % 2 == 0) {

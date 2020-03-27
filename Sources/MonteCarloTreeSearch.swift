@@ -17,7 +17,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
     public let player: G.Player
     public let policy: P
 
-    let tree: Tree
+    var tree: Tree
 
     public init(game: G, player: G.Player, policy: P) {
         let tree = MonteCarloTreeSearch.initialTreeForGame(game, policy: policy)
@@ -47,18 +47,22 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
     }
 
-    public func refine(
+    public func refined(
         using randomSource: @escaping RandomSource = Int.random(in:)
     ) -> MonteCarloTreeSearch {
+        var copy = self
+        copy.refine(using: randomSource)
+        return copy
+    }
+
+    public mutating func refine(
+        using randomSource: @escaping RandomSource = Int.random(in:)
+    ) {
         guard self.player == self.game.currentPlayer else {
-            return self
+            return
         }
-        let game = self.game
-        let player = self.player
-        let policy = self.policy
         let payload = MonteCarloPayload<G>(game: self.game, randomSource: randomSource)
-        let tree = self.refineSubtree(self.tree, payload: payload)
-        return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
+        self.tree = self.refineSubtree(self.tree, payload: payload)
     }
 
     public func mergeWith(_ other: MonteCarloTreeSearch) -> MonteCarloTreeSearch {
