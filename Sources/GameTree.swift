@@ -22,6 +22,15 @@ public indirect enum GameTree<Node, Edge: Hashable> {
         }
     }
 
+    public func height() -> Int {
+        switch self {
+        case .leaf(_):
+            return 0
+        case .branch(_, let edges):
+            return 1 + edges.values.reduce(0) { max($0, $1.height()) }
+        }
+    }
+
     /// Execute passed closures based on node type.
     ///
     /// Implemented as:
