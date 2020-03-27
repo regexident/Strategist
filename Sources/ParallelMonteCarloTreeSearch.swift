@@ -53,70 +53,53 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
         self.base.update(move)
     }
 
-    public func refine(
-        using randomSource: @escaping RandomSource = Int.random(in:)
+    public func refined(
+        _ randomSource: @escaping RandomSource = Int.random(in:)
     ) -> ParallelMonteCarloTreeSearch {
+        var copy = self
+        copy.refine(using: randomSource)
+        return copy
+    }
+
+    public mutating func refine(
+        using randomSource: @escaping RandomSource = Int.random(in:)
+    ) {
         guard self.player == self.game.currentPlayer else {
-            return self
+            return
         }
 
-        var count = self.parallelCount
+        let count = self.parallelCount
         let batchSize = self.batchSize
 
         let batchCount = (count + batchSize - 1) / batchSize
 
-        var bases: [Base] = Array(unsafeUninitializedCapacity: count) { buffer, initializedCount in
+        let bases: [Base] = Array(unsafeUninitializedCapacity: count) { buffer, initializedCount in
             initializedCount = count
 
-            let bufferStartIndex = buffer.baseAddress!
-            let bufferEndIndex = bufferStartIndex + buffer.count
+            let base = self.base
+            let bufferStartIndex = buffer.startIndex
+            let bufferEndIndex = buffer.endIndex
 
-            let refineBatch: (Int) -> () = { batchIndex in
+            let refineBatch: (UnsafeMutableBufferPointer<Base>, Int) -> () = { buffer, batchIndex in
                 let batchStartIndex = bufferStartIndex + (batchIndex * batchSize)
                 let batchEndIndex = min(bufferEndIndex, batchStartIndex + batchSize)
-                for pointer in batchStartIndex..<batchEndIndex {
-                    let refinedBase = self.base.refined(using: randomSource)
-                    pointer.initialize(to: refinedBase)
-                }
+                let batchRange = batchStartIndex..<batchEndIndex
+                Self.refineBatch(base: base, bufferSlice: buffer[batchRange], randomSource: randomSource)
             }
 
             guard batchCount > 1 else {
-                refineBatch(0)
+                refineBatch(buffer, 0)
                 return
             }
 
             DispatchQueue.concurrentPerform(iterations: batchCount) { batchIndex in
-                refineBatch(batchIndex)
+                refineBatch(buffer, batchIndex)
             }
+
+            Self.mergeBases(bufferSlice: buffer[...], count: batchCount, stride: batchSize)
         }
 
-        while count % 2 != 0 {
-            let lhs = bases.removeLast()
-            let rhs = bases.removeLast()
-            let merged = lhs.mergeWith(rhs)
-            bases.append(merged)
-            count -= 1
-        }
-
-        assert(count % 2 == 0)
-
-        bases.withUnsafeMutableBufferPointer { basesBufferPointer in
-            while count > 1 {
-                DispatchQueue.concurrentPerform(iterations: count / 2) { i in
-                    let (lhs, rhs) = (i, i + (count / 2))
-                    let lhsBase = basesBufferPointer[lhs]
-                    let rhsBase = basesBufferPointer[rhs]
-                    basesBufferPointer[lhs] = lhsBase.mergeWith(rhsBase)
-                }
-                count /= 2
-            }
-        }
-
-        return ParallelMonteCarloTreeSearch(
-            base: bases[0],
-            parallelCount: self.parallelCount,
-            batchSize: self.batchSize
-        )
+        self.base = bases[0]
     }
 
     public func mergeWith(_ other: ParallelMonteCarloTreeSearch) -> ParallelMonteCarloTreeSearch {
@@ -127,6 +110,74 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
             parallelCount: self.parallelCount,
             batchSize: self.batchSize
         )
+    }
+
+    private static func refineBatch(
+        base: Base,
+        bufferSlice: Slice<UnsafeMutableBufferPointer<Base>>,
+        randomSource: @escaping RandomSource
+    ) {
+        let batchSize = bufferSlice.count
+        let batchStartIndex = bufferSlice.startIndex
+        let batchEndIndex = bufferSlice.endIndex
+
+        guard let bufferBaseAddress = bufferSlice.base.baseAddress else {
+            fatalError("Expected `baseAddress`, found nil")
+        }
+        for index in batchStartIndex..<batchEndIndex {
+            let pointer = bufferBaseAddress + index
+            let refinedBase = base.refined(using: randomSource)
+            pointer.initialize(to: refinedBase)
+        }
+
+        guard batchSize > 1 else {
+            return
+        }
+
+        Self.mergeBases(bufferSlice: bufferSlice, count: batchSize, stride: 1)
+    }
+
+    private static func mergeBases(bufferSlice: Slice<UnsafeMutableBufferPointer<Base>>, count: Int, stride: Int) {
+        var bufferSlice = bufferSlice
+        let bufferSliceStartIndex = bufferSlice.startIndex
+        let bufferSliceIndices = bufferSlice.indices
+
+        var count = count
+
+        guard count > 1 else {
+            return
+        }
+
+        if count % 2 != 0 {
+            let (lhs, rhs) = (
+                bufferSliceStartIndex + ((count - 2) * stride),
+                bufferSliceStartIndex + ((count - 1) * stride)
+            )
+            assert(bufferSliceIndices.contains(lhs))
+            assert(bufferSliceIndices.contains(rhs))
+            let lhsBase = bufferSlice[lhs]
+            let rhsBase = bufferSlice[rhs]
+            bufferSlice[lhs] = lhsBase.mergeWith(rhsBase)
+            count -= 1
+        }
+
+        assert(count % 2 == 0, "The count should by now be evenly dividable by 2")
+
+        while count > 1 {
+            let halfCount = count / 2
+            for index in 0..<halfCount {
+                let (lhs, rhs) = (
+                    bufferSliceStartIndex + (index * stride),
+                    bufferSliceStartIndex + ((index + halfCount) * stride)
+                )
+                assert(bufferSliceIndices.contains(lhs))
+                assert(bufferSliceIndices.contains(rhs))
+                let lhsBase = bufferSlice[lhs]
+                let rhsBase = bufferSlice[rhs]
+                bufferSlice[lhs] = lhsBase.mergeWith(rhsBase)
+            }
+            count = halfCount
+        }
     }
 }
 
