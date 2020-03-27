@@ -82,7 +82,7 @@ extension MonteCarloTreeSearch: MonteCarloTreeSearchStrategy {
         guard self.player == self.game.currentPlayer else {
             return
         }
-        
+
         let payload = MonteCarloPayload<G>(game: self.game, randomSource: randomSource)
         self.tree = self.refineSubtree(self.tree, payload: payload)
     }
@@ -96,7 +96,7 @@ extension MonteCarloTreeSearch: MonteCarloTreeSearchStrategy {
 }
 
 extension MonteCarloTreeSearch {
-    func refineSubtree(_ subtree: Tree, payload: MonteCarloPayload<G>) -> Tree {
+    private func refineSubtree(_ subtree: Tree, payload: MonteCarloPayload<G>) -> Tree {
         let refinedSubtree: Tree = subtree.analysis(leaf: { node in
             if node.explorable {
                 return self.refineExplorableSubtree(node, edges: [:], payload: payload)
@@ -120,7 +120,7 @@ extension MonteCarloTreeSearch {
         return .leaf(node)
     }
 
-    func refineExplorableSubtree(_ node: TreeNode, edges: [G.Move: Tree], payload: MonteCarloPayload<G>) -> Tree {
+    private func refineExplorableSubtree(_ node: TreeNode, edges: [G.Move: Tree], payload: MonteCarloPayload<G>) -> Tree {
         let exploredMoves = Set(edges.map { $0.0 })
         let moves = payload.game.availableMoves()
         let filteredMoves = policy.filterMoves(payload.game, depth: payload.explorationDepth, moves: moves)
@@ -150,7 +150,7 @@ extension MonteCarloTreeSearch {
         return .branch(refinedNode, refinedEdges)
     }
 
-    func refineExploredSubtree(_ node: TreeNode, edges: [G.Move: Tree], payload: MonteCarloPayload<G>) -> Tree {
+    private func refineExploredSubtree(_ node: TreeNode, edges: [G.Move: Tree], payload: MonteCarloPayload<G>) -> Tree {
         let plays = node.stats.plays
         var edgesGenerator = edges.makeIterator()
         let generator: AnyIterator<(G.Move, TreeStats)> = AnyIterator {
@@ -178,7 +178,7 @@ extension MonteCarloTreeSearch {
         return .branch(refinedNode, refinedEdges)
     }
 
-    func simulateSubtree(_ rootPlayer: G.Player, payload: MonteCarloPayload<G>) -> Tree {
+    private func simulateSubtree(_ rootPlayer: G.Player, payload: MonteCarloPayload<G>) -> Tree {
         var evaluation = payload.game.evaluate(forPlayer: rootPlayer)
         guard !evaluation.isFinal else {
             let score = self.policy.reward(evaluation)
@@ -212,7 +212,7 @@ extension MonteCarloTreeSearch {
         return .leaf(node)
     }
 
-    static func initialTreeForGame(_ game: G, policy: P) -> Tree {
+    private static func initialTreeForGame(_ game: G, policy: P) -> Tree {
         let evaluation = game.evaluate()
         let node: TreeNode
         if evaluation.isFinal {
@@ -229,20 +229,20 @@ extension MonteCarloTreeSearch {
     typealias Node = TreeNode
     typealias Edges = [Game.Move: Tree]
 
-    func isExplorableTree(_ tree: Tree) -> Bool {
+    private func isExplorableTree(_ tree: Tree) -> Bool {
         switch tree {
         case let .branch(node, _): return node.explorable
         default: return false
         }
     }
 
-    static func mergeNodes(_ lhs: Node, _ rhs: Node) -> Node {
+    private static func mergeNodes(_ lhs: Node, _ rhs: Node) -> Node {
         let stats = lhs.stats.averageWith(rhs.stats)
         let explorable = lhs.explorable && rhs.explorable
         return Node(stats: stats, explorable: explorable)
     }
     
-    static func mergeEdges(_ lhs: Edges, _ rhs: Edges) -> Edges {
+    private static func mergeEdges(_ lhs: Edges, _ rhs: Edges) -> Edges {
         var edges = lhs
         for (move, rhsSubtree) in rhs {
             if let lhsSubtree = edges[move] {
@@ -254,7 +254,7 @@ extension MonteCarloTreeSearch {
         return edges
     }
     
-    static func mergeTrees(lhs: Tree, rhs: Tree) -> Tree {
+    private static func mergeTrees(lhs: Tree, rhs: Tree) -> Tree {
         switch (lhs, rhs) {
         case let (.leaf(lhsNode), .leaf(rhsNode)):
             let node = mergeNodes(lhsNode, rhsNode)
