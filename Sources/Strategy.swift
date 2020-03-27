@@ -62,7 +62,7 @@ extension Strategy {
     /// - returns: Randomly chosen maximizing available move.
     public func randomMaximizingMove(
         _ game: Game,
-        randomSource: RandomSource? = Int.random(in:)
+        using randomSource: RandomSource? = Int.random(in:)
     ) -> Game.Move? {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMove: Game.Move? = nil

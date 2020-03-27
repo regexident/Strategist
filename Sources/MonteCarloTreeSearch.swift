@@ -48,7 +48,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
     }
 
     public func refine(
-        _ randomSource: @escaping RandomSource = Int.random(in:)
+        using randomSource: @escaping RandomSource = Int.random(in:)
     ) -> MonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
@@ -106,7 +106,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         let chosenMove = self.policy.simulationMove(
             unexploredMoves.makeIterator(),
             simulationDepth: 0,
-            randomSource: payload.randomSource
+            using: payload.randomSource
         )
         guard let move = chosenMove else {
             return .branch(refinedNode, refinedEdges)
@@ -133,7 +133,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
                 return (move, subtree.node.stats)
             }
         }
-        guard let move = self.policy.explorationMove(generator, explorationDepth: payload.explorationDepth, plays: plays, randomSource: payload.randomSource) else {
+        guard let move = self.policy.explorationMove(generator, explorationDepth: payload.explorationDepth, plays: plays, using: payload.randomSource) else {
             return .branch(node, edges)
         }
         guard let subtree = edges[move] else {
@@ -172,7 +172,7 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
                     break
                 }
                 let availableMoves = game.availableMoves()
-                let choice = self.policy.simulationMove(availableMoves, simulationDepth: simulationDepth, randomSource: payload.randomSource)
+                let choice = self.policy.simulationMove(availableMoves, simulationDepth: simulationDepth, using: payload.randomSource)
                 guard let move = choice else {
                     break
                 }

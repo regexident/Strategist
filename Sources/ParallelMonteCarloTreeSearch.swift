@@ -58,7 +58,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
     }
 
     public func refine(
-        _ randomSource: @escaping RandomSource = Int.random(in:)
+        using randomSource: @escaping RandomSource = Int.random(in:)
     ) -> ParallelMonteCarloTreeSearch {
         guard self.player == self.game.currentPlayer else {
             return self
@@ -73,7 +73,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
             var refinedBase: Base = self.base
             for _ in 0..<batchSize {
                 let lhs = refinedBase
-                let rhs = refinedBase.refine(randomSource)
+                let rhs = refinedBase.refine(using: randomSource)
                 refinedBase = lhs.mergeWith(rhs)
             }
             return ParallelMonteCarloTreeSearch(
@@ -93,7 +93,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
                 let batchStartIndex = bufferStartIndex + (batchIndex * batchSize)
                 let batchEndIndex = min(bufferEndIndex, batchStartIndex + batchSize)
                 for pointer in batchStartIndex..<batchEndIndex {
-                    let refinedBase = self.base.refine(randomSource)
+                    let refinedBase = self.base.refine(using: randomSource)
                     pointer.initialize(to: refinedBase)
                 }
             }

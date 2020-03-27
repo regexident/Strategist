@@ -41,7 +41,7 @@ extension Collection where Index == Int {
     /// - complexity: O(1).
     /// - returns: Randomly selected element from `self`.
     func sample(
-        _ randomSource: RandomSource = Int.random(in:)
+        using randomSource: RandomSource = Int.random(in:)
     ) -> Iterator.Element? {
         let count = self.count
         guard count > 0 else {
@@ -58,7 +58,7 @@ extension IteratorProtocol {
     /// - complexity: O(`Array(self).count`).
     /// - returns: Randomly selected element from `self`.
     mutating func sample(
-        _ randomSource: RandomSource = Int.random(in:)
+        using randomSource: RandomSource = Int.random(in:)
     ) -> Element? {
         var result = self.next()
         var count = 1
@@ -77,9 +77,9 @@ extension IteratorProtocol where Element : Comparable {
     //
     /// -complexity: O(elements.count).
     mutating func sampleMaxElement(
-        randomSource: RandomSource = Int.random(in:)
+        using randomSource: RandomSource = Int.random(in:)
     ) -> Element? {
-        return self.sampleMaxElement(randomSource: randomSource) { $0 < $1 }
+        return self.sampleMaxElement(using: randomSource) { $0 < $1 }
     }
 }
 
@@ -89,7 +89,7 @@ extension IteratorProtocol {
     /// - complexity: O(elements.count).
     /// - requires: `isOrderedBefore` is a strict weak ordering over `self`.
     mutating func sampleMaxElement(
-        randomSource: RandomSource = Int.random(in:),
+        using randomSource: RandomSource = Int.random(in:),
         isOrderedBefore: (Element, Element) throws -> Bool
     ) rethrows -> Element? {
         guard var maxElement = self.next() else {

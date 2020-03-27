@@ -90,6 +90,11 @@ class TicTacToeTests: XCTestCase {
         var strategy = Strategy(game: game, player: players[0], policy: policy)
         let randomStrategy = RandomStrategy<TicTacToeGame>()
 
+        var generator = DeterministicRandomNumberGenerator(seed: (0, 1, 2, 3))
+        let randomSource: (Range<Int>) -> Int = { range in
+            Int.random(in: range, using: &generator)
+        }
+
         measure {
             for i in 0... {
                 let evaluation = game.evaluate()
@@ -106,9 +111,9 @@ class TicTacToeTests: XCTestCase {
                 }
                 let move: TicTacToeMove
                 if (i % 2 == 0) {
-                    move = strategy.randomMaximizingMove(game)!
+                    move = strategy.randomMaximizingMove(game, using: randomSource)!
                 } else {
-                    move = randomStrategy.randomMaximizingMove(game)!
+                    move = randomStrategy.randomMaximizingMove(game, using: randomSource)!
                 }
                 strategy = strategy.update(move)
                 game = game.update(move)
@@ -146,6 +151,11 @@ class TicTacToeTests: XCTestCase {
         )
         let randomStrategy = RandomStrategy<TicTacToeGame>()
 
+        var generator = DeterministicRandomNumberGenerator(seed: (0, 1, 2, 3))
+        let randomSource: (Range<Int>) -> Int = { range in
+            Int.random(in: range, using: &generator)
+        }
+
         measure {
             for i in 0... {
                 let evaluation = game.evaluate()
@@ -162,9 +172,9 @@ class TicTacToeTests: XCTestCase {
                 }
                 let move: TicTacToeMove
                 if (i % 2 == 0) {
-                    move = strategy.randomMaximizingMove(game)!
+                    move = strategy.randomMaximizingMove(game, using: randomSource)!
                 } else {
-                    move = randomStrategy.randomMaximizingMove(game)!
+                    move = randomStrategy.randomMaximizingMove(game, using: randomSource)!
                 }
                 strategy = strategy.update(move)
                 game = game.update(move)

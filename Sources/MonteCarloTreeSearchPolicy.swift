@@ -65,9 +65,9 @@ public protocol MonteCarloTreeSearchPolicy: TreeSearchPolicy, ScoringHeuristic {
     func reward(_ evaluation: Evaluation<Game.Score>) -> Int
 
     /// Heuristic used for choosing game state subtree to further explore.
-    func explorationMove<M: IteratorProtocol>(_ availableMoves: M, explorationDepth: Int, plays: Int, randomSource: RandomSource) -> Game.Move? where M.Element == (Game.Move, TreeStats)
+    func explorationMove<M: IteratorProtocol>(_ availableMoves: M, explorationDepth: Int, plays: Int, using randomSource: RandomSource) -> Game.Move? where M.Element == (Game.Move, TreeStats)
     /// Heuristic used for choosing game state subtree to further explore.
-    func simulationMove<M: IteratorProtocol>(_ availableMoves: M, simulationDepth: Int, randomSource: RandomSource) -> Game.Move? where M.Element == Game.Move
+    func simulationMove<M: IteratorProtocol>(_ availableMoves: M, simulationDepth: Int, using randomSource: RandomSource) -> Game.Move? where M.Element == Game.Move
 }
 
 /// Simple minimal implementation of `MonteCarloTreeSearchPolicy`.
@@ -123,9 +123,9 @@ public struct SimpleMonteCarloTreeSearchPolicy<G, H>: MonteCarloTreeSearchPolicy
         }
     }
 
-    public func explorationMove<M: IteratorProtocol>(_ availableMoves: M, explorationDepth: Int, plays: Int, randomSource: RandomSource) -> Game.Move? where M.Element == (Game.Move, TreeStats) {
+    public func explorationMove<M: IteratorProtocol>(_ availableMoves: M, explorationDepth: Int, plays: Int, using randomSource: RandomSource) -> Game.Move? where M.Element == (Game.Move, TreeStats) {
         var availableMoves = availableMoves
-        let maxElement = availableMoves.sampleMaxElement(randomSource: randomSource) { lhs, rhs in
+        let maxElement = availableMoves.sampleMaxElement(using: randomSource) { lhs, rhs in
             let lhsScore = self.scoringHeuristic.scoreMove(lhs.1, parentPlays: plays)
             let rhsScore = self.scoringHeuristic.scoreMove(rhs.1, parentPlays: plays)
             return lhsScore < rhsScore
@@ -133,8 +133,8 @@ public struct SimpleMonteCarloTreeSearchPolicy<G, H>: MonteCarloTreeSearchPolicy
         return maxElement.map { $0.0 }
     }
 
-    public func simulationMove<M: IteratorProtocol>(_ availableMoves: M, simulationDepth: Int, randomSource: RandomSource) -> Game.Move? where M.Element == Game.Move {
+    public func simulationMove<M: IteratorProtocol>(_ availableMoves: M, simulationDepth: Int, using randomSource: RandomSource) -> Game.Move? where M.Element == Game.Move {
         var availableMoves = availableMoves
-        return availableMoves.sample(randomSource)
+        return availableMoves.sample(using: randomSource)
     }
 }

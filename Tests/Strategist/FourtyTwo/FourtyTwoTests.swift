@@ -77,6 +77,11 @@ class FourtyTwoTests: XCTestCase {
         )
         var strategy = Strategy(game: game, player: player, policy: policy)
 
+        var generator = DeterministicRandomNumberGenerator(seed: (0, 1, 2, 3))
+        let randomSource: (Range<Int>) -> Int = { range in
+            Int.random(in: range, using: &generator)
+        }
+
         measure {
             while true {
                 let evaluation = game.evaluate()
@@ -84,8 +89,8 @@ class FourtyTwoTests: XCTestCase {
                     XCTAssert(evaluation.isVictory, "Expected to win")
                     return
                 }
-                strategy = strategy.refine()
-                let move = strategy.randomMaximizingMove(game)!
+                strategy = strategy.refine(using: randomSource)
+                let move = strategy.randomMaximizingMove(game, using: randomSource)!
                 game = game.update(move)
                 strategy = strategy.update(move)
             }
@@ -120,6 +125,11 @@ class FourtyTwoTests: XCTestCase {
             parallelCount: parallelCount,
             batchSize: batchSize
         )
+
+        var generator = DeterministicRandomNumberGenerator(seed: (0, 1, 2, 3))
+        let randomSource: (Range<Int>) -> Int = { range in
+            Int.random(in: range, using: &generator)
+        }
         
         measure {
             while true {
@@ -128,8 +138,8 @@ class FourtyTwoTests: XCTestCase {
                     XCTAssert(evaluation.isVictory, "Expected to win")
                     return
                 }
-                strategy = strategy.refine()
-                let move = strategy.randomMaximizingMove(game)!
+                strategy = strategy.refine(using: randomSource)
+                let move = strategy.randomMaximizingMove(game, using: randomSource)!
                 game = game.update(move)
                 strategy = strategy.update(move)
             }
