@@ -52,15 +52,20 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
     public mutating func update(_ move: G.Move) {
         self.base.update(move)
     }
+}
 
-    public func refined(
-        _ randomSource: @escaping RandomSource = Int.random(in:)
-    ) -> ParallelMonteCarloTreeSearch {
-        var copy = self
-        copy.refine(using: randomSource)
-        return copy
+extension ParallelMonteCarloTreeSearch: Strategy {
+    public typealias Game = G
+
+    public func evaluatedMoves(_ game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
+        assert(game == self.game)
+        assert(game.currentPlayer == self.player)
+
+        return self.base.evaluatedMoves(game)
     }
+}
 
+extension ParallelMonteCarloTreeSearch: MonteCarloTreeSearchStrategy {
     public mutating func refine(
         using randomSource: @escaping RandomSource = Int.random(in:)
     ) {
@@ -102,18 +107,15 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
         self.base = bases[0]
     }
 
-    public func mergedWith(_ other: ParallelMonteCarloTreeSearch) -> Self {
-        var copy = self
-        copy.mergeWith(other)
-        return copy
-    }
-
     public mutating func mergeWith(_ other: ParallelMonteCarloTreeSearch) {
         assert(self.base.game == other.base.game)
         assert(self.base.player == other.base.player)
+
         self.base.mergeWith(other.base)
     }
+}
 
+extension ParallelMonteCarloTreeSearch {
     private static func refineBatch(
         base: Base,
         bufferSlice: Slice<UnsafeMutableBufferPointer<Base>>,
@@ -189,15 +191,5 @@ where
 {
     public var debugDescription: String {
         return self.base.debugDescription
-    }
-}
-
-extension ParallelMonteCarloTreeSearch: Strategy {
-    public typealias Game = G
-
-    public func evaluatedMoves(_ game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
-        assert(game == self.game)
-        assert(game.currentPlayer == self.player)
-        return self.base.evaluatedMoves(game)
     }
 }

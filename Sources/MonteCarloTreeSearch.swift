@@ -43,37 +43,59 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
             }
         })
     }
+}
 
-    public func refined(
-        using randomSource: @escaping RandomSource = Int.random(in:)
-    ) -> Self {
-        var copy = self
-        copy.refine(using: randomSource)
-        return copy
+extension MonteCarloTreeSearch: Strategy {
+    public typealias Game = G
+
+    public func evaluatedMoves(_ game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
+        assert(game == self.game)
+        assert(game.currentPlayer == self.player)
+
+        let player = game.currentPlayer
+        let (node, edges) = self.tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
+        let parentPlays = node.stats.plays
+        let moves = game.availableMoves()
+        let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
+        return AnySequence(filteredMoves.lazy.map { move in
+            if let subtree = edges[move] {
+                let nextGame = game.update(move)
+                let evaluation = nextGame.evaluate(forPlayer: player)
+                switch evaluation {
+                case .ongoing(_):
+                    let score = self.policy.scoreMove(subtree.node.stats, parentPlays: parentPlays)
+                    return (move, Evaluation.ongoing(score))
+                default:
+                    return (move, evaluation)
+                }
+            } else {
+                return (move, .ongoing(Game.Score.mid))
+            }
+        })
     }
+}
 
+extension MonteCarloTreeSearch: MonteCarloTreeSearchStrategy {
     public mutating func refine(
         using randomSource: @escaping RandomSource = Int.random(in:)
     ) {
         guard self.player == self.game.currentPlayer else {
             return
         }
+        
         let payload = MonteCarloPayload<G>(game: self.game, randomSource: randomSource)
         self.tree = self.refineSubtree(self.tree, payload: payload)
-    }
-
-    public func mergedWith(_ other: MonteCarloTreeSearch) -> Self {
-        var copy = self
-        copy.mergeWith(other)
-        return copy
     }
 
     public mutating func mergeWith(_ other: MonteCarloTreeSearch) {
         assert(self.game == other.game)
         assert(self.player == other.player)
+
         self.tree = MonteCarloTreeSearch.mergeTrees(lhs: self.tree, rhs: other.tree)
     }
+}
 
+extension MonteCarloTreeSearch {
     func refineSubtree(_ subtree: Tree, payload: MonteCarloPayload<G>) -> Tree {
         let refinedSubtree: Tree = subtree.analysis(leaf: { node in
             if node.explorable {
@@ -257,35 +279,6 @@ where
 {
     public var debugDescription: String {
         return self.tree.debugDescription
-    }
-}
-
-extension MonteCarloTreeSearch: Strategy {
-    public typealias Game = G
-
-    public func evaluatedMoves(_ game: Game) -> AnySequence<(G.Move, Evaluation<Game.Score>)> {
-        assert(game == self.game)
-        assert(game.currentPlayer == self.player)
-        let player = game.currentPlayer
-        let (node, edges) = self.tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
-        let parentPlays = node.stats.plays
-        let moves = game.availableMoves()
-        let filteredMoves = self.policy.filterMoves(game, depth: 0, moves: moves)
-        return AnySequence(filteredMoves.lazy.map { move in
-            if let subtree = edges[move] {
-                let nextGame = game.update(move)
-                let evaluation = nextGame.evaluate(forPlayer: player)
-                switch evaluation {
-                case .ongoing(_):
-                    let score = self.policy.scoreMove(subtree.node.stats, parentPlays: parentPlays)
-                    return (move, Evaluation.ongoing(score))
-                default:
-                    return (move, evaluation)
-                }
-            } else {
-                return (move, .ongoing(Game.Score.mid))
-            }
-        })
     }
 }
 
