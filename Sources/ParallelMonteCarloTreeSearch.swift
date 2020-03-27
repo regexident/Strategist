@@ -102,14 +102,16 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
         self.base = bases[0]
     }
 
-    public func mergeWith(_ other: ParallelMonteCarloTreeSearch) -> ParallelMonteCarloTreeSearch {
+    public func mergedWith(_ other: ParallelMonteCarloTreeSearch) -> Self {
+        var copy = self
+        copy.mergeWith(other)
+        return copy
+    }
+
+    public mutating func mergeWith(_ other: ParallelMonteCarloTreeSearch) {
         assert(self.base.game == other.base.game)
         assert(self.base.player == other.base.player)
-        return ParallelMonteCarloTreeSearch(
-            base: self.base.mergeWith(other.base),
-            parallelCount: self.parallelCount,
-            batchSize: self.batchSize
-        )
+        self.base.mergeWith(other.base)
     }
 
     private static func refineBatch(
@@ -157,7 +159,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
             assert(bufferSliceIndices.contains(rhs))
             let lhsBase = bufferSlice[lhs]
             let rhsBase = bufferSlice[rhs]
-            bufferSlice[lhs] = lhsBase.mergeWith(rhsBase)
+            bufferSlice[lhs] = lhsBase.mergedWith(rhsBase)
             count -= 1
         }
 
@@ -174,7 +176,7 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
                 assert(bufferSliceIndices.contains(rhs))
                 let lhsBase = bufferSlice[lhs]
                 let rhsBase = bufferSlice[rhs]
-                bufferSlice[lhs] = lhsBase.mergeWith(rhsBase)
+                bufferSlice[lhs] = lhsBase.mergedWith(rhsBase)
             }
             count = halfCount
         }

@@ -62,14 +62,16 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
         self.tree = self.refineSubtree(self.tree, payload: payload)
     }
 
-    public func mergeWith(_ other: MonteCarloTreeSearch) -> Self {
+    public func mergedWith(_ other: MonteCarloTreeSearch) -> Self {
+        var copy = self
+        copy.mergeWith(other)
+        return copy
+    }
+
+    public mutating func mergeWith(_ other: MonteCarloTreeSearch) {
         assert(self.game == other.game)
         assert(self.player == other.player)
-        let game = self.game
-        let player = self.player
-        let policy = self.policy
-        let tree = MonteCarloTreeSearch.mergeTrees(lhs: self.tree, rhs: other.tree)
-        return MonteCarloTreeSearch(game: game, player: player, policy: policy, tree: tree)
+        self.tree = MonteCarloTreeSearch.mergeTrees(lhs: self.tree, rhs: other.tree)
     }
 
     func refineSubtree(_ subtree: Tree, payload: MonteCarloPayload<G>) -> Tree {
