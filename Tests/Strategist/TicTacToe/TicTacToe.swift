@@ -60,6 +60,12 @@ extension TicTacToeTile: CustomStringConvertible {
     }
 }
 
+extension TicTacToeTile: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
+    }
+}
+
 struct TicTacToeMove: Strategist.Move, Hashable {
     let index: Int
     let player: TicTacToePlayer
@@ -74,6 +80,12 @@ extension TicTacToeMove: Equatable {
 extension TicTacToeMove: CustomStringConvertible {
     var description: String {
         return "\(self.index)"
+    }
+}
+
+extension TicTacToeMove: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
     }
 }
 
@@ -192,5 +204,11 @@ extension TicTacToeGame: CustomStringConvertible {
             row.map { "\($0)" }.joined(separator: " | ")
             }.joined(separator: "\n")
         return "\(self.currentPlayer):\n\(board)"
+    }
+}
+
+extension TicTacToeGame: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
     }
 }

@@ -137,7 +137,10 @@ public struct ParallelMonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPo
     }
 }
 
-extension ParallelMonteCarloTreeSearch: CustomDebugStringConvertible {
+extension ParallelMonteCarloTreeSearch: CustomDebugStringConvertible
+where
+    G.Move: CustomDebugStringConvertible
+{
     public var debugDescription: String {
         return self.base.debugDescription
     }

@@ -16,6 +16,12 @@ extension FourtyTwoPlayer: CustomStringConvertible {
     }
 }
 
+extension FourtyTwoPlayer: CustomDebugStringConvertible {
+    var debugDescription: String {
+        self.description
+    }
+}
+
 enum FourtyTwoMove: Strategist.Move, Equatable, Hashable {
     case add(Int)
     case mul(Int)
@@ -27,6 +33,12 @@ extension FourtyTwoMove: CustomStringConvertible {
         case let .add(value): return "+ \(value)"
         case let .mul(value): return "* \(value)"
         }
+    }
+}
+
+extension FourtyTwoMove: CustomDebugStringConvertible {
+    var debugDescription: String {
+        self.description
     }
 }
 
@@ -100,5 +112,11 @@ struct FourtyTwoGame: Strategist.Game, Equatable, Hashable {
 extension FourtyTwoGame: CustomStringConvertible {
     var description: String {
         return "\(self.sum) @ \(self.moves)"
+    }
+}
+
+extension FourtyTwoGame: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
     }
 }

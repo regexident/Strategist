@@ -43,22 +43,22 @@ public indirect enum GameTree<Node, Edge: Hashable> {
     }
 
     /// Generate dot-formatted ([Graphviz](http://graphviz.org/)) tree representation.
-    public func customDebugDescription(_ tree: GameTree<Node, Edge>, parentEdge: Edge? = nil, prefix: String = "root", closure: (Node, Edge?) -> (String, String?)) -> String {
+    public static func customDebugDescription(_ tree: GameTree<Node, Edge>, parentEdge: Edge? = nil, prefix: String = "root", closure: (Node, Edge?) -> (String, String?)) -> String {
         var string = ""
         if parentEdge == nil {
-            string += "digraph GameTree {"
+            string += "digraph GameTree {\n"
         }
-        let (node, edges) = self.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
+        let (node, edges) = tree.analysis(leaf: { ($0, [:]) }, branch: { ($0, $1) })
         let (nodeLabel, edgeLabel) = closure(node, parentEdge)
         let nodeID = prefix
-        string += "\t\(nodeID) [label=\"\(nodeLabel)\"];"
+        string += "\t\(nodeID) [label=\"\(nodeLabel)\"];\n"
         for (index, (key: edge, value: subtree)) in edges.enumerated() {
             let subnodeID = nodeID + "_\(index)"
-            string += self.customDebugDescription(subtree, parentEdge: edge, prefix: subnodeID, closure: closure)
-            string += "\t\(nodeID) -> \(subnodeID) [label=\"\(edgeLabel ?? "<null>")\"];"
+            string += Self.customDebugDescription(subtree, parentEdge: edge, prefix: subnodeID, closure: closure)
+            string += "\t\(nodeID) -> \(subnodeID) [label=\"\(edgeLabel ?? "<null>")\"];\n"
         }
         if parentEdge == nil {
-            string += "}"
+            string += "}\n"
         }
         return string
     }
@@ -76,11 +76,15 @@ extension GameTree: CustomStringConvertible {
     }
 }
 
-extension GameTree: CustomDebugStringConvertible {
+extension GameTree: CustomDebugStringConvertible
+where
+    Node: CustomDebugStringConvertible,
+    Edge: CustomDebugStringConvertible
+{
     public var debugDescription: String {
-        return self.customDebugDescription(self) { node, edge in
-            let nodeLabel = "\(node)"
-            let edgeLabel = edge.map { "\($0)" }
+        return Self.customDebugDescription(self) { node, edge in
+            let nodeLabel = node.debugDescription
+            let edgeLabel = edge.map { $0.debugDescription }
             return (nodeLabel, edgeLabel)
         }
     }

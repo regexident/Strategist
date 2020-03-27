@@ -246,7 +246,10 @@ public struct MonteCarloTreeSearch<G, P> where P: MonteCarloTreeSearchPolicy, P.
     }
 }
 
-extension MonteCarloTreeSearch: CustomDebugStringConvertible {
+extension MonteCarloTreeSearch: CustomDebugStringConvertible
+where
+    G.Move: CustomDebugStringConvertible
+{
     public var debugDescription: String {
         return self.tree.debugDescription
     }
@@ -321,6 +324,12 @@ extension TreeStats: CustomStringConvertible {
     }
 }
 
+extension TreeStats: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
+    }
+}
+
 struct TreeNode {
     var stats: TreeStats
     var explorable: Bool
@@ -328,6 +337,24 @@ struct TreeNode {
     init(stats: TreeStats, explorable: Bool) {
         self.stats = stats
         self.explorable = explorable
+    }
+}
+
+extension TreeNode: CustomStringConvertible {
+    public var description: String {
+        var description = self.stats.debugDescription
+
+        if self.explorable {
+            description += " | explorable"
+        }
+
+        return description
+    }
+}
+
+extension TreeNode: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return self.description
     }
 }
 
