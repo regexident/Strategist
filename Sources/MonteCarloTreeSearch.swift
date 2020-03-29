@@ -287,24 +287,24 @@ public struct TreeStats {
         let plays = (self.plays + other.plays + 1) / 2
         return TreeStats(score: score, plays: plays)
     }
-}
 
-func +(lhs: TreeStats, rhs: TreeStats) -> TreeStats {
-    return TreeStats(score: lhs.wins + rhs.wins, plays: lhs.plays + rhs.plays)
-}
+    static func +(lhs: Self, rhs: Self) -> Self {
+        return TreeStats(score: lhs.wins + rhs.wins, plays: lhs.plays + rhs.plays)
+    }
 
-func -(lhs: TreeStats, rhs: TreeStats) -> TreeStats {
-    return TreeStats(score: lhs.wins - rhs.wins, plays: lhs.plays - rhs.plays)
-}
+    static func -(lhs: Self, rhs: Self) -> Self {
+        return TreeStats(score: lhs.wins - rhs.wins, plays: lhs.plays - rhs.plays)
+    }
 
-func +=(lhs: inout TreeStats, rhs: TreeStats) {
-    lhs.wins += rhs.wins
-    lhs.plays += rhs.plays
-}
+    static func +=(lhs: inout Self, rhs: Self) {
+        lhs.wins += rhs.wins
+        lhs.plays += rhs.plays
+    }
 
-func -=(lhs: inout TreeStats, rhs: TreeStats) {
-    lhs.wins -= rhs.wins
-    lhs.plays -= rhs.plays
+    static func -=(lhs: inout Self, rhs: Self) {
+        lhs.wins -= rhs.wins
+        lhs.plays -= rhs.plays
+    }
 }
 
 extension TreeStats: CustomStringConvertible {
