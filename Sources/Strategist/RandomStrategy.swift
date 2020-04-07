@@ -23,7 +23,7 @@ public struct RandomStrategy<G: Game>: Strategy {
         })
     }
 
-    public func update(_ move: Game.Move) -> RandomStrategy {
-        return self
+    public func update(_ move: Game.Move) {
+        // does nothing
     }
 }

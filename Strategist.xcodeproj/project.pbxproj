@@ -22,6 +22,9 @@
 		BF03E0111D0CC67200FFBAF4 /* MonteCarloTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03E0101D0CC67200FFBAF4 /* MonteCarloTreeSearch.swift */; };
 		BF03E0131D0CC6BC00FFBAF4 /* MonteCarloTreeSearchPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03E0121D0CC6BC00FFBAF4 /* MonteCarloTreeSearchPolicy.swift */; };
 		BF03E0151D0CC6FA00FFBAF4 /* GameTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03E0141D0CC6FA00FFBAF4 /* GameTree.swift */; };
+		CA26E184242D2C44008D08A0 /* ParallelMonteCarloTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB574ED1D12D2490086BE45 /* ParallelMonteCarloTreeSearch.swift */; };
+		CA26E189242E4036008D08A0 /* DeterministicRandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26E188242E4036008D08A0 /* DeterministicRandomNumberGenerator.swift */; };
+		CA26E18C242E4EB5008D08A0 /* MonteCarloTreeSearchStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26E18B242E4EB5008D08A0 /* MonteCarloTreeSearchStrategy.swift */; };
 		_LinkFileRef_Strategist_via_StrategistTestSuite /* Strategist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "_____Product_Strategist" /* Strategist.framework */; };
 		__src_cc_ref_Sources/Strategist.swift /* Strategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Strategist.swift /* Strategist.swift */; };
 		__src_cc_ref_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */; };
@@ -54,6 +57,8 @@
 		BF03E0121D0CC6BC00FFBAF4 /* MonteCarloTreeSearchPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MonteCarloTreeSearchPolicy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BF03E0141D0CC6FA00FFBAF4 /* GameTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTree.swift; sourceTree = "<group>"; };
 		BFB574ED1D12D2490086BE45 /* ParallelMonteCarloTreeSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallelMonteCarloTreeSearch.swift; sourceTree = "<group>"; };
+		CA26E188242E4036008D08A0 /* DeterministicRandomNumberGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeterministicRandomNumberGenerator.swift; sourceTree = "<group>"; };
+		CA26E18B242E4EB5008D08A0 /* MonteCarloTreeSearchStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearchStrategy.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Sources/Strategist.swift /* Strategist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategist.swift; sourceTree = "<group>"; };
 		__PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = Strategist.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
@@ -61,7 +66,7 @@
 		__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Strategist_Info.plist; path = Strategist.xcodeproj/Strategist_Info.plist; sourceTree = SOURCE_ROOT; };
 		__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategistTests.swift; sourceTree = "<group>"; };
 		"_____Product_Strategist" /* Strategist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Strategist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = StrategistTestSuite.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"_____Product_StrategistTestSuite" /* StrategistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = StrategistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +106,18 @@
 			path = FourtyTwo;
 			sourceTree = "<group>";
 		};
+		CA26E18A242E403B008D08A0 /* Auxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				CA26E188242E4036008D08A0 /* DeterministicRandomNumberGenerator.swift */,
+			);
+			path = Auxiliary;
+			sourceTree = "<group>";
+		};
 		TestProducts_ /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */,
+				"_____Product_StrategistTestSuite" /* StrategistTests.xctest */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -159,30 +172,32 @@
 				BF03DFF31D0C858700FFBAF4 /* RandomStrategy.swift */,
 				BF03E0011D0CA5F800FFBAF4 /* MiniMaxTreeSearch.swift */,
 				BF03E00E1D0CC5C500FFBAF4 /* NegaMaxStrategy.swift */,
+				CA26E18B242E4EB5008D08A0 /* MonteCarloTreeSearchStrategy.swift */,
 				BF03E0101D0CC67200FFBAF4 /* MonteCarloTreeSearch.swift */,
 				BFB574ED1D12D2490086BE45 /* ParallelMonteCarloTreeSearch.swift */,
 				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
 			);
 			name = Strategist;
-			path = Sources;
+			path = Sources/Strategist;
 			sourceTree = "<group>";
 		};
-		"_______Group_StrategistTestSuite" /* StrategistTestSuite */ = {
+		"_______Group_StrategistTestSuite" /* StrategistTests */ = {
 			isa = PBXGroup;
 			children = (
 				BF03E0041D0CACB400FFBAF4 /* FourtyTwo */,
 				BF03DFF51D0C85C500FFBAF4 /* TicTacToe */,
+				CA26E18A242E403B008D08A0 /* Auxiliary */,
 				__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */,
 				__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */,
 			);
-			name = StrategistTestSuite;
-			path = Tests/Strategist;
+			name = StrategistTests;
+			path = Tests/StrategistTests;
 			sourceTree = "<group>";
 		};
 		"_______Tests_" /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				"_______Group_StrategistTestSuite" /* StrategistTestSuite */,
+				"_______Group_StrategistTestSuite" /* StrategistTests */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -206,9 +221,9 @@
 			productReference = "_____Product_Strategist" /* Strategist.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		"______Target_StrategistTestSuite" /* StrategistTestSuite */ = {
+		"______Target_StrategistTestSuite" /* StrategistTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = "_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */;
+			buildConfigurationList = "_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTests" */;
 			buildPhases = (
 				CompilePhase_StrategistTestSuite /* Sources */,
 				"___LinkPhase_StrategistTestSuite" /* Frameworks */,
@@ -218,9 +233,9 @@
 			dependencies = (
 				__Dependency_Strategist /* PBXTargetDependency */,
 			);
-			name = StrategistTestSuite;
+			name = StrategistTests;
 			productName = StrategistTestSuite;
-			productReference = "_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */;
+			productReference = "_____Product_StrategistTestSuite" /* StrategistTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -229,15 +244,15 @@
 		__RootObject_ /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1140;
 				TargetAttributes = {
 					"______Target_Strategist" = {
 						DevelopmentTeam = RHSV5Y8MLD;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1140;
 					};
 					"______Target_StrategistTestSuite" = {
 						DevelopmentTeam = RHSV5Y8MLD;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -246,6 +261,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = "___RootGroup_";
@@ -254,7 +270,7 @@
 			projectRoot = "";
 			targets = (
 				"______Target_Strategist" /* Strategist */,
-				"______Target_StrategistTestSuite" /* StrategistTestSuite */,
+				"______Target_StrategistTestSuite" /* StrategistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,10 +287,13 @@
 				BF03DFEC1D0C7F8F00FFBAF4 /* Extensions.swift in Sources */,
 				BF03DFF41D0C858700FFBAF4 /* RandomStrategy.swift in Sources */,
 				BF03DFF01D0C7FAD00FFBAF4 /* Strategy.swift in Sources */,
+				CA26E184242D2C44008D08A0 /* ParallelMonteCarloTreeSearch.swift in Sources */,
+				CA26E18C242E4EB5008D08A0 /* MonteCarloTreeSearchStrategy.swift in Sources */,
 				BF03DFEB1D0C7F8F00FFBAF4 /* Evaluation.swift in Sources */,
 				BF03E0151D0CC6FA00FFBAF4 /* GameTree.swift in Sources */,
 				BF03E00F1D0CC5C500FFBAF4 /* NegaMaxStrategy.swift in Sources */,
 				BF03E0131D0CC6BC00FFBAF4 /* MonteCarloTreeSearchPolicy.swift in Sources */,
+				CA26E189242E4036008D08A0 /* DeterministicRandomNumberGenerator.swift in Sources */,
 				BF03DFEE1D0C7F8F00FFBAF4 /* Score.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +335,7 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -330,6 +350,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -348,6 +369,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -363,6 +385,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -370,6 +393,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = __PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -404,6 +428,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = __PBXFileRef_Strategist.xcodeproj/Configs/Project.xcconfig /* Project.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -456,7 +481,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		"_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */ = {
+		"_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				"___DebugConf_StrategistTestSuite" /* Debug */,

@@ -21,7 +21,17 @@ public protocol Strategy {
     /// Updates strategy's internal state for chosen `move`.
     /// 
     /// - returns: Updated strategy.
-    func update(_ move: Game.Move) -> Self
+    mutating func update(_ move: Game.Move)
+
+    func updated(_ move: Game.Move) -> Self
+}
+
+extension Strategy {
+    public func updated(_ move: Game.Move) -> Self {
+        var copy = self
+        copy.update(move)
+        return copy
+    }
 }
 
 extension Strategy {
@@ -60,7 +70,10 @@ extension Strategy {
     /// - note: The selection is deterministic.
     ///
     /// - returns: Randomly chosen maximizing available move.
-    public func randomMaximizingMove(_ game: Game, randomSource: ((UInt32) -> UInt32)? = nil) -> Game.Move? {
+    public func randomMaximizingMove(
+        _ game: Game,
+        using randomSource: RandomSource? = Int.random(in:)
+    ) -> Game.Move? {
         var bestEvaluation = Evaluation<Game.Score>.min
         var bestMove: Game.Move? = nil
         var count = 0
@@ -74,7 +87,7 @@ extension Strategy {
                 bestMove = move
                 count = 1
             } else if evaluation == bestEvaluation {
-                if Int(randomSource(UInt32(count))) == 0 {
+                if randomSource(0..<count) == 0 {
                     bestMove = move
                 }
                 count += 1

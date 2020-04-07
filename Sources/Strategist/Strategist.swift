@@ -9,20 +9,7 @@
 import Darwin
 
 /// Function type used for injecting random sources into Strategist.
-public typealias RandomSource = (UInt32) -> UInt32
-
-/// Convenience function for generating curried fake random sources.
-public func fakeRandomSource(_ output: UInt32) -> RandomSource {
-    return { upperBound in
-        assert(output < upperBound)
-        return output
-    }
-}
-
-/// The default random source to use unless provided explicitly.
-public func defaultRandomSource(_ upperBound: UInt32) -> UInt32 {
-    return arc4random_uniform(upperBound)
-}
+public typealias RandomSource = (Range<Int>) -> Int
 
 /// A lightweight player descriptor.
 ///

@@ -40,12 +40,14 @@ extension Collection where Index == Int {
     ///
     /// - complexity: O(1).
     /// - returns: Randomly selected element from `self`.
-    func sample(_ randomSource: RandomSource = Strategist.defaultRandomSource) -> Iterator.Element? {
+    func sample(
+        using randomSource: RandomSource = Int.random(in:)
+    ) -> Iterator.Element? {
         let count = self.count
         guard count > 0 else {
             return nil
         }
-        let index = randomSource(UInt32(count))
+        let index = randomSource(0..<count)
         return self[Int(index)]
     }
 }
@@ -55,11 +57,13 @@ extension IteratorProtocol {
     ///
     /// - complexity: O(`Array(self).count`).
     /// - returns: Randomly selected element from `self`.
-    mutating func sample(_ randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
+    mutating func sample(
+        using randomSource: RandomSource = Int.random(in:)
+    ) -> Element? {
         var result = self.next()
-        var count = 2
+        var count = 1
         while let element = self.next() {
-            if randomSource(UInt32(count)) == 0 {
+            if randomSource(0..<count) == 0 {
                 result = element
             }
             count += 1
@@ -72,8 +76,10 @@ extension IteratorProtocol where Element : Comparable {
     //Returns a random sample from maximum elements in self or nil if the sequence is empty.
     //
     /// -complexity: O(elements.count).
-    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource) -> Element? {
-        return self.sampleMaxElement(randomSource: randomSource) { $0 < $1 }
+    mutating func sampleMaxElement(
+        using randomSource: RandomSource = Int.random(in:)
+    ) -> Element? {
+        return self.sampleMaxElement(using: randomSource) { $0 < $1 }
     }
 }
 
@@ -82,17 +88,20 @@ extension IteratorProtocol {
     ///
     /// - complexity: O(elements.count).
     /// - requires: `isOrderedBefore` is a strict weak ordering over `self`.
-    mutating func sampleMaxElement(randomSource: RandomSource = Strategist.defaultRandomSource, isOrderedBefore: (Element, Element) throws -> Bool) rethrows -> Element? {
+    mutating func sampleMaxElement(
+        using randomSource: RandomSource = Int.random(in:),
+        isOrderedBefore: (Element, Element) throws -> Bool
+    ) rethrows -> Element? {
         guard var maxElement = self.next() else {
             return nil
         }
-        var maxElementCount = 0
+        var maxElementCount = 1
         while let element = self.next() {
             if try isOrderedBefore(maxElement, element) {
                 maxElement = element
                 maxElementCount = 1
             } else if try !isOrderedBefore(element, maxElement) {
-                if randomSource(UInt32(maxElementCount)) == 0 {
+                if randomSource(0..<maxElementCount) == 0 {
                     maxElement = element
                 }
                 maxElementCount += 1
