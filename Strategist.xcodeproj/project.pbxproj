@@ -66,7 +66,7 @@
 		__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Strategist_Info.plist; path = Strategist.xcodeproj/Strategist_Info.plist; sourceTree = SOURCE_ROOT; };
 		__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategistTests.swift; sourceTree = "<group>"; };
 		"_____Product_Strategist" /* Strategist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Strategist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = StrategistTestSuite.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"_____Product_StrategistTestSuite" /* StrategistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = StrategistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,7 @@
 		TestProducts_ /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				"_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */,
+				"_____Product_StrategistTestSuite" /* StrategistTests.xctest */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -178,10 +178,10 @@
 				__PBXFileRef_Strategist_Info.plist /* Strategist_Info.plist */,
 			);
 			name = Strategist;
-			path = Sources;
+			path = Sources/Strategist;
 			sourceTree = "<group>";
 		};
-		"_______Group_StrategistTestSuite" /* StrategistTestSuite */ = {
+		"_______Group_StrategistTestSuite" /* StrategistTests */ = {
 			isa = PBXGroup;
 			children = (
 				BF03E0041D0CACB400FFBAF4 /* FourtyTwo */,
@@ -190,14 +190,14 @@
 				__PBXFileRef_Tests/Strategist/StrategistTests.swift /* StrategistTests.swift */,
 				__PBXFileRef_StrategistTestSuite_Info.plist /* StrategistTestSuite_Info.plist */,
 			);
-			name = StrategistTestSuite;
-			path = Tests/Strategist;
+			name = StrategistTests;
+			path = Tests/StrategistTests;
 			sourceTree = "<group>";
 		};
 		"_______Tests_" /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				"_______Group_StrategistTestSuite" /* StrategistTestSuite */,
+				"_______Group_StrategistTestSuite" /* StrategistTests */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -221,9 +221,9 @@
 			productReference = "_____Product_Strategist" /* Strategist.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		"______Target_StrategistTestSuite" /* StrategistTestSuite */ = {
+		"______Target_StrategistTestSuite" /* StrategistTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = "_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */;
+			buildConfigurationList = "_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTests" */;
 			buildPhases = (
 				CompilePhase_StrategistTestSuite /* Sources */,
 				"___LinkPhase_StrategistTestSuite" /* Frameworks */,
@@ -233,9 +233,9 @@
 			dependencies = (
 				__Dependency_Strategist /* PBXTargetDependency */,
 			);
-			name = StrategistTestSuite;
+			name = StrategistTests;
 			productName = StrategistTestSuite;
-			productReference = "_____Product_StrategistTestSuite" /* StrategistTestSuite.xctest */;
+			productReference = "_____Product_StrategistTestSuite" /* StrategistTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -270,7 +270,7 @@
 			projectRoot = "";
 			targets = (
 				"______Target_Strategist" /* Strategist */,
-				"______Target_StrategistTestSuite" /* StrategistTestSuite */,
+				"______Target_StrategistTestSuite" /* StrategistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -481,7 +481,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		"_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTestSuite" */ = {
+		"_______Confs_StrategistTestSuite" /* Build configuration list for PBXNativeTarget "StrategistTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				"___DebugConf_StrategistTestSuite" /* Debug */,
